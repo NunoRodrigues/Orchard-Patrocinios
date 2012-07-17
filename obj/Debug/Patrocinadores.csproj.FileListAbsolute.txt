@@ -1,4 +1,3 @@
-C:\Users\NunoRodrigues\Documents\Visual Studio 2012\Projects\Orchard.Source.1.4.2\src\Orchard.Web\Modules\Patrocinadores\bin\NHibernate.dll
 C:\Users\NunoRodrigues\Documents\Visual Studio 2012\Projects\Orchard.Source.1.4.2\src\Orchard.Web\Modules\Patrocinadores\bin\Patrocinadores.dll
 C:\Users\NunoRodrigues\Documents\Visual Studio 2012\Projects\Orchard.Source.1.4.2\src\Orchard.Web\Modules\Patrocinadores\bin\Patrocinadores.pdb
 C:\Users\NunoRodrigues\Documents\Visual Studio 2012\Projects\Orchard.Source.1.4.2\src\Orchard.Web\Modules\Patrocinadores\bin\Orchard.Core.dll
@@ -8,6 +7,7 @@ C:\Users\NunoRodrigues\Documents\Visual Studio 2012\Projects\Orchard.Source.1.4.
 C:\Users\NunoRodrigues\Documents\Visual Studio 2012\Projects\Orchard.Source.1.4.2\src\Orchard.Web\Modules\Patrocinadores\bin\Autofac.dll
 C:\Users\NunoRodrigues\Documents\Visual Studio 2012\Projects\Orchard.Source.1.4.2\src\Orchard.Web\Modules\Patrocinadores\bin\log4net.dll
 C:\Users\NunoRodrigues\Documents\Visual Studio 2012\Projects\Orchard.Source.1.4.2\src\Orchard.Web\Modules\Patrocinadores\bin\Castle.Core.dll
+C:\Users\NunoRodrigues\Documents\Visual Studio 2012\Projects\Orchard.Source.1.4.2\src\Orchard.Web\Modules\Patrocinadores\bin\NHibernate.dll
 C:\Users\NunoRodrigues\Documents\Visual Studio 2012\Projects\Orchard.Source.1.4.2\src\Orchard.Web\Modules\Patrocinadores\bin\Castle.DynamicProxy2.dll
 C:\Users\NunoRodrigues\Documents\Visual Studio 2012\Projects\Orchard.Source.1.4.2\src\Orchard.Web\Modules\Patrocinadores\bin\NHibernate.Linq.dll
 C:\Users\NunoRodrigues\Documents\Visual Studio 2012\Projects\Orchard.Source.1.4.2\src\Orchard.Web\Modules\Patrocinadores\bin\Autofac.Configuration.dll

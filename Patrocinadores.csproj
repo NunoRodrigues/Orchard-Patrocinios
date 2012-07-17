@@ -86,9 +86,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Drivers\PatrocinioAdminDriver.cs" />
+    <Compile Include="Drivers\PatrocinioConfigurationDriver.cs" />
     <Compile Include="Handlers\PatrocinioAdminHandler.cs" />
+    <Compile Include="Handlers\PatrocinioConfigurationHandler.cs" />
     <Compile Include="Migrations.cs" />
+    <Compile Include="Models\Patrocinador.cs" />
     <Compile Include="Models\PatrocinioAdminRecord.cs" />
+    <Compile Include="Models\PatrocinioConfigurationRecord.cs" />
+    <Compile Include="Models\PatrocinioLocalizacao.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\EditorTemplates\Parts\PatrocinioAdmin.cshtml" />
@@ -100,7 +105,10 @@
     <Content Include="placement.info" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\EditorTemplates\Patrocinadores\PatrocinioAdmin.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\PatrocinioConfiguration.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Parts\PatrocinioConfiguration.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

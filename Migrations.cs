@@ -51,12 +51,23 @@ namespace Patrocinadores
          
             return 2;
         }
+
         
-        /*
         public int UpdateFrom2() {
+            // Creating table MapRecord
+            SchemaBuilder.CreateTable("PatrocinioConfigurationRecord", table => table
+                .ContentPartRecord()
+                .Column("IDTipo", DbType.Int32)
+                .Column("IDPatrocinador", DbType.Int32)
+                .Column("URLImage", DbType.String)
+            );
+
+            ContentDefinitionManager.AlterPartDefinition(typeof(PatrocinioConfigurationPart).Name, cfg => cfg.Attachable());
+
             return 3;
         }
         
+        /*
         public int UpdateFrom3() {
             return 4;
         }
