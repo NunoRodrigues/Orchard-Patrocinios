@@ -1,0 +1,17 @@
+﻿@model Patrocinadores.Models.PatrocinioConfigurationPart
+<h2>Patrocinio - Configuração</h2>
+<fieldset>
+    @Html.LabelFor(widget => widget.IDTipo, T("Localização"))
+    @Html.DropDownList("IDTipo", new SelectList(Model.Localizacao, "ID", "Nome"))
+    <span class="hint">@T("Localização do Patrocinio na Pagina")</span>
+</fieldset>
+<fieldset>
+    @Html.LabelFor(widget => widget.IDPatrocinador, T("Patrocinador"))
+    @Html.DropDownList("IDPatrocinador", new SelectList(Model.Patrocinadores, "ID", "Nome"))
+    <span class="hint">@T("Altura (em Pixels) da região disponivel para Patrocinio")</span>
+</fieldset>
+<fieldset>
+    @Html.LabelFor(widget => widget.URLImage, T("URLImage"))
+    @Html.TextBoxFor(widget => widget.URLImage, new { @class = "text text-small"})
+    <span class="hint">@T("Altura (em Pixels) da região disponivel para Patrocinio")</span>
+</fieldset>
