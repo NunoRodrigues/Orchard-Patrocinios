@@ -1,0 +1,10 @@
+Name: Patrocinadores
+AntiForgery: enabled
+Author: The Orchard Team
+Website: http://orchardproject.net
+Version: 1.0
+OrchardVersion: 1.0
+Description: Modulo de Gestão de Patrocinadores
+Features:
+    Patrocinadores:
+        Description: Description for feature Patrocinadores.
