@@ -1,3 +1,4 @@
+C:\Users\NunoRodrigues\Documents\Visual Studio 2012\Projects\Orchard.Source.1.4.2\src\Orchard.Web\Modules\Patrocinadores\obj\Debug\Patrocinadores.csprojResolveAssemblyReference.cache
 C:\Users\NunoRodrigues\Documents\Visual Studio 2012\Projects\Orchard.Source.1.4.2\src\Orchard.Web\Modules\Patrocinadores\bin\Patrocinadores.dll
 C:\Users\NunoRodrigues\Documents\Visual Studio 2012\Projects\Orchard.Source.1.4.2\src\Orchard.Web\Modules\Patrocinadores\bin\Patrocinadores.pdb
 C:\Users\NunoRodrigues\Documents\Visual Studio 2012\Projects\Orchard.Source.1.4.2\src\Orchard.Web\Modules\Patrocinadores\bin\Orchard.Core.dll
@@ -25,6 +26,5 @@ C:\Users\NunoRodrigues\Documents\Visual Studio 2012\Projects\Orchard.Source.1.4.
 C:\Users\NunoRodrigues\Documents\Visual Studio 2012\Projects\Orchard.Source.1.4.2\src\Orchard.Web\Modules\Patrocinadores\bin\Castle.DynamicProxy2.xml
 C:\Users\NunoRodrigues\Documents\Visual Studio 2012\Projects\Orchard.Source.1.4.2\src\Orchard.Web\Modules\Patrocinadores\bin\NHibernate.Linq.xml
 C:\Users\NunoRodrigues\Documents\Visual Studio 2012\Projects\Orchard.Source.1.4.2\src\Orchard.Web\Modules\Patrocinadores\bin\Iesi.Collections.xml
-C:\Users\NunoRodrigues\Documents\Visual Studio 2012\Projects\Orchard.Source.1.4.2\src\Orchard.Web\Modules\Patrocinadores\obj\Debug\Patrocinadores.csprojResolveAssemblyReference.cache
 C:\Users\NunoRodrigues\Documents\Visual Studio 2012\Projects\Orchard.Source.1.4.2\src\Orchard.Web\Modules\Patrocinadores\obj\Debug\Patrocinadores.dll
 C:\Users\NunoRodrigues\Documents\Visual Studio 2012\Projects\Orchard.Source.1.4.2\src\Orchard.Web\Modules\Patrocinadores\obj\Debug\Patrocinadores.pdb

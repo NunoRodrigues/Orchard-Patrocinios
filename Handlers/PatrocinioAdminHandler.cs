@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Data;
-using Patrocinadores.Models;
+using Orchard.Patrocinadores.Models;
 
-namespace Patrocinadores.Handlers
+namespace Orchard.Patrocinadores.Handlers
 {
     public class PatrocinioAdminHandler : ContentHandler
     {

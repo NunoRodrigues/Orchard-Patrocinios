@@ -6,7 +6,7 @@ using System.Web;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Records;
 
-namespace Patrocinadores.Models
+namespace Orchard.Patrocinadores.Models
 {
     public class PatrocinioConfigurationRecord : ContentPartRecord {
         public virtual int IDTipo { get; set; }
@@ -41,24 +41,14 @@ namespace Patrocinadores.Models
             set { Record.URLImage = value; }
         }
 
-        public List<Patrocinador> Patrocinadores
+        public List<PatrocinioRecord> Patrocinios
         {
-            get { return Patrocinador.getList(); }
+            get { return PatrocinioRecord.getList(1); }
         }
 
-        public List<PatrocinioLocalizacao> Localizacao
+        public List<PatrocinioLocalizacao> Localizacoes
         {
             get { return PatrocinioLocalizacao.getList(); }
         }
     }
-
-    public class Patrocinio
-    {
-        public int IDZona { get; set; }
-        public int IDPagina { get; set; }
-        public int IDPatrocinador { get; set; }
-        public string URLImage { get; set; }
-        public DateTime DataInicio { get; set; }
-        public DateTime DataFim { get; set; }
-    }   
 }

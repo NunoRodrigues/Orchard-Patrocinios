@@ -1,0 +1,18 @@
+﻿.LocationWidget {
+    display:inline-block;
+    position:relative;
+    width:48px;
+    height:48px;
+    background-image:url('/OrchardLocal/Modules/Patrocinadores/Styles/Images/Fundo.gif');
+    margin:0px 0px 0px 0px;
+}
+.LocationWidgetItem {
+    position:absolute; 
+    cursor: pointer;
+    margin:0px 0px 0px 0px;
+    border:solid #cccccc 1px;
+}
+
+.LocationWidgetSelect {
+    margin:0px 0px 0px 0px;
+}

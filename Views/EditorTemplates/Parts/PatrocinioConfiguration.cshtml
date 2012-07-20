@@ -1,17 +1,164 @@
-﻿@model Patrocinadores.Models.PatrocinioConfigurationPart
-<h2>Patrocinio - Configuração</h2>
+﻿@model Orchard.Patrocinadores.Models.PatrocinioConfigurationPart
+@{
+    Style.Require("Patrocionadores_Calendar").AtHead();
+    Style.Require("Patrocionadores_CalendarPrint").AtHead();
+    Style.Require("Patrocionadores_LocationWidget").AtHead();
+
+    Script.Require("Patrocionadores_Calendar").AtFoot();
+    Script.Require("Patrocionadores_Location").AtFoot();
+}
+
+@using(Script.Foot()) {
+    <script type ="text/javascript">
+        //<![CDATA[
+
+        var patrocinadores = [
+            { id: 1, nome: 'Skol' },
+            { id: 2, nome: 'Brahma' },
+            { id: 3, nome: 'Antarctica' },
+            { id: 4, nome: 'Nova Schin' }
+        ];
+
+        var data = [
+                    {
+                        title: patrocinadores[0].nome,
+                        start: new Date(2012, 5, 15),
+                        end: new Date(2012, 6, 14),
+                        backgroundColor: '#F7C43C !important',
+                        textColor: '#FFFFFF !important',
+
+                        id: 1,
+                        patrocinador: patrocinadores[0],
+                        region: LocationWidget.region[0]
+                    },
+                    {
+                        title: 'Brahma',
+                        start: new Date(2012, 6, 1),
+                        end: new Date(2012, 6, 31),
+                        backgroundColor: '#A346EE !important',
+                        textColor: '#FFFFFF !important',
+                        id: 2,
+                        patrocinador: patrocinadores[1]
+                    },
+                    {
+                        title: 'Antarctica',
+                        start: new Date(2012, 6, 15),
+                        end: new Date(2012, 7, 14),
+                        backgroundColor: '#F7C43C !important',
+                        textColor: '#FFFFFF !important',
+                        id: 3,
+                        patrocinador: patrocinadores[2]
+                    },
+                    {
+                        title: 'Skol',
+                        start: new Date(2012, 6, 1),
+                        end: new Date(2012, 6, 31),
+                        backgroundColor: '#349ED7 !important',
+                        textColor: '#FFFFFF !important',
+                        id: 4,
+                        patrocinador: patrocinadores[0]
+                    },
+                    {
+                        title: 'Nova Schin',
+                        start: new Date(2012, 5, 1),
+                        end: new Date(2012, 7, 31),
+                        backgroundColor: '#51DB5E !important',
+                        textColor: '#FFFFFF !important',
+                        id: 5,
+                        patrocinador: patrocinadores[3]
+                    }
+
+        ];
+
+        function showDetail(startDate, endDate, idDetail) {
+            var dlg = $("div#dialog");
+
+            // Title
+
+            if (parseInt(idDetail) > 0) {
+                // Alteração
+                var itemData = jQuery.grep(data, function (item, index) {
+                    return item.id == idDetail;
+                })[0];
+
+                dlg.find('#DataInicio').datepicker("setDate", itemData.start);
+                dlg.find('#DataFim').datepicker("setDate", itemData.end);
+
+                dlg.find('#IDPatrocinador').val(itemData.title);
+            } else {
+                // Novo
+
+                dlg.find('#DataInicio').datepicker("setDate", startDate);
+                dlg.find('#DataFim').datepicker("setDate", endDate);
+
+                //dlg.find('#IDPatrocinador').val(Patrocinador)
+            }
+
+            dlg.dialog({
+                open: function () {
+                    jQuery('input:first').blur();
+                    jQuery('#ui-datepicker-div').hide();
+                },
+            });
+        }
+
+        $(document).ready(function () { 
+
+            // Calendar - Filter
+            LocationWidget.getNew($('#LocationFilter'), true);
+
+            // Calendar - Init
+            $('#calendar').fullCalendar({
+                selectable: true,
+                select: function (startDate, endDate, allDay, jsEvent, view) {
+                    // Open Dialog
+                    showDetail(startDate, endDate);
+                },
+                eventClick: function(calEvent, jsEvent, view) {
+                    showDetail(calEvent._start, calEvent._end, calEvent.id);
+
+                    // change the border color just for fun
+                    $(this).css('border-color', 'red');
+
+                },
+                events: data
+            });
+
+            // Edit - Fields
+            LocationWidget.getNew($('#LocationEditWidget'), false);
+            $("#DataInicio").datepicker({ dateFormat: 'yy-mm-dd' });
+            $("#DataFim").datepicker({ dateFormat: 'yy-mm-dd' });
+        });
+        //]]>
+    </script>
+}
+<h2>Patrocinadores</h2>
 <fieldset>
-    @Html.LabelFor(widget => widget.IDTipo, T("Localização"))
-    @Html.DropDownList("IDTipo", new SelectList(Model.Localizacao, "ID", "Nome"))
-    <span class="hint">@T("Localização do Patrocinio na Pagina")</span>
+    <div id="LocationFilter"></div>
+    <div id='calendar'></div>
 </fieldset>
-<fieldset>
-    @Html.LabelFor(widget => widget.IDPatrocinador, T("Patrocinador"))
-    @Html.DropDownList("IDPatrocinador", new SelectList(Model.Patrocinadores, "ID", "Nome"))
-    <span class="hint">@T("Altura (em Pixels) da região disponivel para Patrocinio")</span>
-</fieldset>
-<fieldset>
-    @Html.LabelFor(widget => widget.URLImage, T("URLImage"))
-    @Html.TextBoxFor(widget => widget.URLImage, new { @class = "text text-small"})
-    <span class="hint">@T("Altura (em Pixels) da região disponivel para Patrocinio")</span>
-</fieldset>
+<div id="dialog" title="Patrocínio" style="display:none;">
+    <input type="hidden" id="" name="" value="" />
+    <fieldset>
+        <label>Localização</label>
+        <div id="LocationEditWidget"></div>
+    </fieldset>
+    <fieldset>
+        <label>Início</label>
+        <input type="text" id="DataInicio" />
+    </fieldset>
+    <fieldset>
+        <label>Fim</label>
+        <input type="text" id="DataFim" />
+    </fieldset>
+    <fieldset>
+        @Html.LabelFor(widget => widget.IDPatrocinador, T("Patrocinador"))
+        @Html.DropDownList("IDPatrocinador", new SelectList(Model.Patrocinadores, "ID", "Nome"))
+    </fieldset>
+    <fieldset>
+        @Html.LabelFor(widget => widget.URLImage, T("URLImage"))
+        @Html.TextBoxFor(widget => widget.URLImage, new { @class = "text text-small"})
+    </fieldset>
+</div>
+
+

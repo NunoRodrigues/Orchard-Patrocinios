@@ -1,24 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Orchard.ContentManagement;
+using Orchard.ContentManagement.Records;
 
-namespace Patrocinadores.Models
+namespace Orchard.Patrocinadores.Models
 {
-    public class Patrocinador
+    public class PatrocinadorRecord : ContentPartRecord
     {
-        public int ID { get; set; }
-        public string Nome { get; set; }
+        public virtual int Id { get; set; }
+        public virtual string Nome { get; set; }
+        public virtual string ContactoNome { get; set; }
+        public virtual string ContactoTelefone { get; set; }
+        public virtual string ContactoEmail { get; set; }
+        public virtual string Observacoes { get; set; }
+    }
 
-        public static List<Patrocinador> getList()
+    public class PatrocinadorPart : ContentPart<PatrocinadorRecord>
+    {
+        [Required]
+        public int Id
         {
-            List<Patrocinador> list = new List<Patrocinador>();
+            get { return Record.Id; }
+            set { Record.Id = value; }
+        }
 
-            list.Add(new Patrocinador() { ID = 1, Nome = "Skol" });
-            list.Add(new Patrocinador() { ID = 2, Nome = "Brahma" });
-            list.Add(new Patrocinador() { ID = 3, Nome = "Antarctica" });
+        [Required]
+        public string Nome
+        {
+            get { return Record.Nome; }
+            set { Record.Nome = value; }
+        }
 
-            return list;
+        [Required]
+        public string ContactoNome
+        {
+            get { return Record.ContactoNome; }
+            set { Record.ContactoNome = value; }
+        }
+
+        [Required]
+        public string ContactoTelefone
+        {
+            get { return Record.ContactoTelefone; }
+            set { Record.ContactoTelefone = value; }
+        }
+
+        [Required]
+        public string ContactoEmail
+        {
+            get { return Record.ContactoEmail; }
+            set { Record.ContactoEmail = value; }
+        }
+
+        [Required]
+        public string Observacoes
+        {
+            get { return Record.Observacoes; }
+            set { Record.Observacoes = value; }
         }
     }
 }

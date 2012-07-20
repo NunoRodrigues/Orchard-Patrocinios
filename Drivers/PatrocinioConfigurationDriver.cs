@@ -6,9 +6,9 @@ using System.Web;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 
-using Patrocinadores.Models;
+using Orchard.Patrocinadores.Models;
 
-namespace Patrocinadores.Drivers
+namespace Orchard.Patrocinadores.Drivers
 {
     public class PatrocinioConfigurationDriver : ContentPartDriver<PatrocinioConfigurationPart>
     {

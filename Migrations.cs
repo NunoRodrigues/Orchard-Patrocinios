@@ -4,9 +4,9 @@ using Orchard.ContentManagement.MetaData;
 using Orchard.Core.Contents.Extensions;
 using Orchard.Data.Migration;
 
-using Patrocinadores.Models;
+using Orchard.Patrocinadores.Models;
 
-namespace Patrocinadores
+namespace Orchard.Patrocinadores
 {
     /// <summary>
     /// Repositorio de carregamento de Configurações, Estruturas de Dados, etc.
@@ -24,12 +24,14 @@ namespace Patrocinadores
         /// </returns>
         public int Create()
         {
+            /*
             // Creating table MapRecord
             SchemaBuilder.CreateTable("PatrocinioAdminRecord", table => table
                 .ContentPartRecord()
                 .Column("Width", DbType.Int32)
                 .Column("Height", DbType.Int32)
             );
+            */
 
             ContentDefinitionManager.AlterPartDefinition(typeof(PatrocinioAdminPart).Name, cfg => cfg.Attachable());
             
@@ -54,6 +56,7 @@ namespace Patrocinadores
 
         
         public int UpdateFrom2() {
+            /*
             // Creating table MapRecord
             SchemaBuilder.CreateTable("PatrocinioConfigurationRecord", table => table
                 .ContentPartRecord()
@@ -61,17 +64,27 @@ namespace Patrocinadores
                 .Column("IDPatrocinador", DbType.Int32)
                 .Column("URLImage", DbType.String)
             );
+            */
 
             ContentDefinitionManager.AlterPartDefinition(typeof(PatrocinioConfigurationPart).Name, cfg => cfg.Attachable());
 
             return 3;
         }
+
         
-        /*
         public int UpdateFrom3() {
+            SchemaBuilder.CreateTable("PatrocinadorRecord", table => table
+                .ContentPartRecord()
+                .Column("Nome", DbType.String)
+                .Column("ContactoNome", DbType.String)
+                .Column("ContactoTelefone", DbType.String)
+                .Column("ContactoEmail", DbType.String)
+                .Column("Observacoes", DbType.String)
+            );
             return 4;
         }
 		
+        /*
         public int UpdateFrom4() {
             return 5;
         }

@@ -6,7 +6,7 @@ using System.Web;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Records;
 
-namespace Patrocinadores.Models
+namespace Orchard.Patrocinadores.Models
 {
     public class PatrocinioAdminRecord : ContentPartRecord
     {
