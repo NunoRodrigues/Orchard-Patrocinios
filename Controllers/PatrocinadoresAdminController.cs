@@ -12,14 +12,17 @@ using Orchard.UI.Navigation;
 using Orchard.Patrocinadores.Models;
 using Orchard.Patrocinadores.Services;
 using Orchard.Patrocinadores.ViewModels;
+using Orchard.Data;
 
 namespace Orchard.Patrocinadores.Controllers
 {
-    [Admin]
     //http://skywalkersoftwaredevelopment.net/blog/writing-an-orchard-webshop-module-from-scratch-part-10
-    public class PatrocinadoresAdminController : Controller
+    [ValidateInput(false), Admin]
+    public class PatrocinadoresAdminController : Controller, IUpdateModel
     {
         private readonly IPatrocinadoresService _customerService;
+        private readonly IContentManager _contentManager;
+        private readonly ITransactionManager _transactionManager;
         private readonly ISiteService _siteService;
 
         public IOrchardServices Services { get; set; }
@@ -27,6 +30,23 @@ namespace Orchard.Patrocinadores.Controllers
         public Localizer T { get; set; }
         dynamic Shape { get; set; }
 
+        public PatrocinadoresAdminController(
+            IOrchardServices services,
+            IContentManager contentManager,
+            ITransactionManager transactionManager,
+            ISiteService siteService,
+            IShapeFactory shapeFactory,
+            IPatrocinadoresService patrocinadoresService) {
+            Services = services;
+            _contentManager = contentManager;
+            _transactionManager = transactionManager;
+            _siteService = siteService;
+            T = NullLocalizer.Instance;
+            Shape = shapeFactory;
+            _customerService = patrocinadoresService;
+        }
+
+        /*
         public PatrocinadoresAdminController(
             IOrchardServices services,
             IPatrocinadoresService patrocinadoresService, 
@@ -39,6 +59,7 @@ namespace Orchard.Patrocinadores.Controllers
             T = NullLocalizer.Instance;
             Shape = shapeFactory;
         }
+        */
 
         public ActionResult Index(PagerParameters pagerParameters, PatrocinadoresListaOptions options)
         {
@@ -88,6 +109,16 @@ namespace Orchard.Patrocinadores.Controllers
                 };
 
             return View(model);
+        }
+
+        bool IUpdateModel.TryUpdateModel<TModel>(TModel model, string prefix, string[] includeProperties, string[] excludeProperties)
+        {
+            return TryUpdateModel(model, prefix, includeProperties, excludeProperties);
+        }
+
+        void IUpdateModel.AddModelError(string key, LocalizedString errorMessage)
+        {
+            ModelState.AddModelError(key, errorMessage.ToString());
         }
     }
 

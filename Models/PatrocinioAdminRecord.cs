@@ -8,13 +8,13 @@ using Orchard.ContentManagement.Records;
 
 namespace Orchard.Patrocinadores.Models
 {
-    public class PatrocinioAdminRecord : ContentPartRecord
+    public class PatrocinioWidgetRecord : ContentPartRecord
     {
         public virtual int Width { get; set; }
         public virtual int Height { get; set; }
     }
 
-    public class PatrocinioAdminPart : ContentPart<PatrocinioAdminRecord>
+    public class PatrocinioWidgetPart : ContentPart<PatrocinioWidgetRecord>
     {
         [Required]
         public int Width

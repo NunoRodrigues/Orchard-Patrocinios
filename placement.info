@@ -1,6 +1,6 @@
 ﻿<Placement>
-    <Place Parts_PatrocinioAdmin="Content:10"/>
-    <Place Parts_PatrocinioAdmin_Edit="Content:7.5"/>
+    <Place Parts_PatrocinioWidget="Content:10"/>
+    <Place Parts_PatrocinioWidget_Edit="Content:7.5"/>
 
     <Place Parts_PatrocinioConfiguration="Content:10"/>
     <Place Parts_PatrocinioConfiguration_Edit="Content:7.5"/>

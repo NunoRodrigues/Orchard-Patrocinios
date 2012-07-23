@@ -10,21 +10,21 @@ using Orchard.Patrocinadores.Models;
 
 namespace Orchard.Patrocinadores.Drivers
 {
-    public class PatrocinioAdminDriver : ContentPartDriver<PatrocinioAdminPart>
+    public class PatrocinioWidgetDriver : ContentPartDriver<PatrocinioWidgetPart>
     {
-        protected override DriverResult Display(PatrocinioAdminPart part, string displayType, dynamic shapeHelper)
+        protected override DriverResult Display(PatrocinioWidgetPart part, string displayType, dynamic shapeHelper)
         {
-            return ContentShape("Parts_PatrocinioAdmin", () => shapeHelper.Parts_PatrocinioAdmin(Width: part.Width, Height: part.Height));
+            return ContentShape("Parts_PatrocinioWidget", () => shapeHelper.Parts_PatrocinioWidget(Width: part.Width, Height: part.Height));
         }
 
         //GET
-        protected override DriverResult Editor(PatrocinioAdminPart part, dynamic shapeHelper)
+        protected override DriverResult Editor(PatrocinioWidgetPart part, dynamic shapeHelper)
         {
-            return ContentShape("Parts_PatrocinioAdmin_Edit", () => shapeHelper.EditorTemplate(TemplateName: "Parts/PatrocinioAdmin", Model: part, Prefix: Prefix));
+            return ContentShape("Parts_PatrocinioWidget_Edit", () => shapeHelper.EditorTemplate(TemplateName: "Parts/PatrocinioWidget", Model: part, Prefix: Prefix));
         }
 
         //POST
-        protected override DriverResult Editor(PatrocinioAdminPart part, IUpdateModel updater, dynamic shapeHelper)
+        protected override DriverResult Editor(PatrocinioWidgetPart part, IUpdateModel updater, dynamic shapeHelper)
         {
             updater.TryUpdateModel(part, Prefix, null, null);
             return Editor(part, shapeHelper);

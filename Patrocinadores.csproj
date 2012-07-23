@@ -110,10 +110,10 @@
     <Compile Include="ViewModels\PatrocinadoresListaViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\EditorTemplates\Parts\PatrocinioAdmin.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\PatrocinioWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Parts\PatrocinioAdmin.cshtml" />
+    <Content Include="Views\Parts\PatrocinioWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="placement.info" />

@@ -24,56 +24,25 @@ namespace Orchard.Patrocinadores
         /// </returns>
         public int Create()
         {
-            /*
-            // Creating table MapRecord
-            SchemaBuilder.CreateTable("PatrocinioAdminRecord", table => table
+            // Widget - Tabela
+            SchemaBuilder.CreateTable(typeof(PatrocinioWidgetRecord).Name, table => table
                 .ContentPartRecord()
                 .Column("Width", DbType.Int32)
                 .Column("Height", DbType.Int32)
             );
-            */
 
-            ContentDefinitionManager.AlterPartDefinition(typeof(PatrocinioAdminPart).Name, cfg => cfg.Attachable());
-            
-            return 1;
-        }
+            // Widget - 
+            ContentDefinitionManager.AlterPartDefinition(typeof(PatrocinioWidgetPart).Name, cfg => cfg.Attachable());
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns>Tem de ser "2" porque a função se chama "UpdateFrom1"</returns>
-        public int UpdateFrom1()
-        {
-         // Create a new widget content type with our map
-            ContentDefinitionManager.AlterTypeDefinition("PatrocinioAdminWidget", cfg => cfg
-                .WithPart("PatrocinioAdminPart")
+            // Widget - Cria um Widget content, o Nome é o nome que aparece ao Utilizador
+            ContentDefinitionManager.AlterTypeDefinition("Patrocínio", cfg => cfg
+                .WithPart(typeof(PatrocinioWidgetPart).Name)
                 .WithPart("WidgetPart")
                 .WithPart("CommonPart")
                 .WithSetting("Stereotype", "Widget"));
-         
-            return 2;
-        }
 
-        
-        public int UpdateFrom2() {
-            /*
-            // Creating table MapRecord
-            SchemaBuilder.CreateTable("PatrocinioConfigurationRecord", table => table
-                .ContentPartRecord()
-                .Column("IDTipo", DbType.Int32)
-                .Column("IDPatrocinador", DbType.Int32)
-                .Column("URLImage", DbType.String)
-            );
-            */
-
-            ContentDefinitionManager.AlterPartDefinition(typeof(PatrocinioConfigurationPart).Name, cfg => cfg.Attachable());
-
-            return 3;
-        }
-
-        
-        public int UpdateFrom3() {
-            SchemaBuilder.CreateTable("PatrocinadorRecord", table => table
+            // Patrocinadores - Tabela
+            SchemaBuilder.CreateTable(typeof(PatrocinadorRecord).Name, table => table
                 .ContentPartRecord()
                 .Column("Nome", DbType.String)
                 .Column("ContactoNome", DbType.String)
@@ -81,10 +50,46 @@ namespace Orchard.Patrocinadores
                 .Column("ContactoEmail", DbType.String)
                 .Column("Observacoes", DbType.String)
             );
+
+            return 1;
+        }
+
+        /*
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Tem de ser "2" porque a função se chama "UpdateFrom1"</returns>
+        public int UpdateFrom1()
+        {
+            // Creating table MapRecord
+            SchemaBuilder.CreateTable("PatrocinioConfigurationRecord", table => table
+                .ContentPartRecord()
+                .Column("IDTipo", DbType.Int32)
+                .Column("IDPatrocinador", DbType.Int32)
+                .Column("URLImage", DbType.String)
+            );
+
+            ContentDefinitionManager.AlterPartDefinition(typeof(PatrocinioConfigurationPart).Name, cfg => cfg.Attachable());
+            
+         
+            return 2;
+        }
+        */
+        
+        /*
+        public int UpdateFrom2() {
+            
+
+            return 3;
+        }
+
+        
+        public int UpdateFrom3() {
+            
             return 4;
         }
 		
-        /*
+        
         public int UpdateFrom4() {
             return 5;
         }
