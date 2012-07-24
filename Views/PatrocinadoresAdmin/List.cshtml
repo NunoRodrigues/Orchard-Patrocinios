@@ -1,0 +1,54 @@
+﻿@model Orchard.Patrocinadores.ViewModels.PatrocinadoresListViewModel
+@using Orchard.Patrocinadores.Models;
+@using Orchard.Patrocinadores.ViewModels;
+
+@{
+    Script.Require("ShapesBase");
+    Layout.Title = T("Patrocinadores").ToString();
+}
+
+@using(Html.BeginFormAntiForgeryPost()) { 
+    @Html.ValidationSummary()
+    <div class="manage">@Html.ActionLink(T("Add a new").ToString(), "Create", new { }, new { @class = "button primaryAction" })</div>
+    
+    <fieldset class="bulk-actions">
+        <label for="filterResults">@T("Publicidade:")</label>
+        <select id="filterResults" name="@Html.NameOf(m => m.Options.Status)">
+            @Html.SelectOption(Model.Options.Status, PatrocinadoresStatus.Todos, T("Todos").ToString())
+            @Html.SelectOption(Model.Options.Status, PatrocinadoresStatus.ComAnunciosActivos, T("Activos").ToString()) 
+            @Html.SelectOption(Model.Options.Status, PatrocinadoresStatus.SemAnunciosActivos, T("Desativos").ToString())
+        </select>
+    </fieldset>
+    <fieldset class="bulk-actions">
+        <label for="filterResults">@T("Pesquisa:")</label>
+         @Html.TextBoxFor(m=>m.Options.TextSearch, new { @class = "textMedium" })
+        <button type="submit" name="submit.Filter" value="@T("Apply")">@T("Apply")</button>
+    </fieldset>
+    <fieldset>
+        <table class="items" summary="@T("This is a table of the comments in your application")">
+            <colgroup>
+                <col id="Col1" />
+                <col id="Col2" />
+                <col id="Col3" />
+                <col id="Col4" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th scope="col">@T("Nome")</th>
+                    <th scope="col">@T("Contacto")</th>
+                    <th scope="col">@T("Telefone")</th>
+                    <th scope="col">@T("Email")</th>
+                </tr>
+            </thead>
+            @foreach (var p in Model.Patrocinadores)
+            {
+                <tr itemscope="itemscope" itemid="@p.Id" itemtype="http://orchardproject.net/data/Comment">
+                    <td><div>@Html.ActionLink(p.Nome, "Edit", new { p.Id }) </div></td>
+                    <td><div>@p.ContactoNome</div></td>
+                    <td><div>@p.ContactoTelefone</div></td>
+                    <td><div>@p.ContactoEmail</div></td>
+                </tr>
+            }
+        </table>
+    </fieldset>
+}

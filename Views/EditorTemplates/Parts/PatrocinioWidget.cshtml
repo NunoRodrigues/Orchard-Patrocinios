@@ -1,0 +1,12 @@
+﻿@model Orchard.Patrocinadores.Models.PatrocinioWidgetPart
+<h2>Patrocinio - Espaço</h2>
+<fieldset>
+    @Html.LabelFor(widget => widget.Width, T("Width"))
+    @Html.TextBoxFor(widget => widget.Width, new { @class = "text text-small"})
+    <span class="hint">@T("Largura (em Pixels) da região disponivel para Patrocinio")</span>
+</fieldset>
+<fieldset>
+    @Html.LabelFor(widget => widget.Height, T("Height"))
+    @Html.TextBoxFor(widget => widget.Height, new { @class = "text text-small"})
+    <span class="hint">@T("Altura (em Pixels) da região disponivel para Patrocinio")</span>
+</fieldset>
