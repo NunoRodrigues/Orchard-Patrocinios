@@ -1,9 +1,8 @@
 ﻿using System.Data;
-
 using Orchard.ContentManagement.MetaData;
 using Orchard.Core.Contents.Extensions;
+using Orchard.Data;
 using Orchard.Data.Migration;
-
 using Orchard.Patrocinadores.Models;
 
 namespace Orchard.Patrocinadores
@@ -13,6 +12,12 @@ namespace Orchard.Patrocinadores
     /// </summary>
     public class Migrations : DataMigrationImpl
     {
+
+        private IRepository<PatrocinadorRecord> _patrocinadorRepository;
+        public Migrations(IRepository<PatrocinadorRecord> patrocinadorRepository)
+        {
+            _patrocinadorRepository = patrocinadorRepository;
+        }
         /// <summary>
         ///     Primeiro Metodo que é chamado quando se instala o Modulo.
         ///     Os consequentes metodos são chamados "UpdateFromX" em que X é um Numero e essa mesma função retorna sempre "X + 1"
@@ -41,9 +46,24 @@ namespace Orchard.Patrocinadores
                 .WithPart("CommonPart")
                 .WithSetting("Stereotype", "Widget"));
 
+            return 1;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Tem de ser "2" porque a função se chama "UpdateFrom1"</returns>
+        public int UpdateFrom1()
+        {
+         
+            return 2;
+        }
+
+        
+        public int UpdateFrom2() {
             // Patrocinadores - Tabela
             SchemaBuilder.CreateTable(typeof(PatrocinadorRecord).Name, table => table
-                .ContentPartRecord()
+                .Column<int>("Id", col => col.PrimaryKey().Identity())
                 .Column("Nome", DbType.String)
                 .Column("ContactoNome", DbType.String)
                 .Column("ContactoTelefone", DbType.String)
@@ -51,45 +71,23 @@ namespace Orchard.Patrocinadores
                 .Column("Observacoes", DbType.String)
             );
 
-            return 1;
-        }
-
-        /*
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns>Tem de ser "2" porque a função se chama "UpdateFrom1"</returns>
-        public int UpdateFrom1()
-        {
-            // Creating table MapRecord
-            SchemaBuilder.CreateTable("PatrocinioConfigurationRecord", table => table
-                .ContentPartRecord()
-                .Column("IDTipo", DbType.Int32)
-                .Column("IDPatrocinador", DbType.Int32)
-                .Column("URLImage", DbType.String)
-            );
-
-            ContentDefinitionManager.AlterPartDefinition(typeof(PatrocinioConfigurationPart).Name, cfg => cfg.Attachable());
-            
-         
-            return 2;
-        }
-        */
-        
-        /*
-        public int UpdateFrom2() {
-            
+            /*
+            _patrocinadorRepository.Create(new PatrocinadorRecord() { Nome = "AAA" });
+            _patrocinadorRepository.Create(new PatrocinadorRecord() { Nome = "BBB" });
+            _patrocinadorRepository.Create(new PatrocinadorRecord() { Nome = "CCC" });
+            */
 
             return 3;
         }
 
-        
         public int UpdateFrom3() {
-            
+            // Configuração
+            ContentDefinitionManager.AlterPartDefinition(typeof(PatrocinioConfigurationPart).Name, cfg => cfg.Attachable());
+         
             return 4;
         }
 		
-        
+        /*
         public int UpdateFrom4() {
             return 5;
         }

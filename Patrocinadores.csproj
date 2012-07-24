@@ -89,23 +89,25 @@
       <Name>Orchard.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Views\PatrocinadoresAdmin\Edit.cshtml" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminMenu.cs" />
     <Compile Include="Controllers\PatrocinadoresAdminController.cs" />
-    <Compile Include="Drivers\PatrocinioAdminDriver.cs" />
+    <Compile Include="Drivers\PatrocinioWidgetDriver.cs" />
     <Compile Include="Drivers\PatrocinioConfigurationDriver.cs" />
-    <Compile Include="Handlers\PatrocinioAdminHandler.cs" />
+    <Compile Include="Handlers\PatrocinioWidgetHandler.cs" />
     <Compile Include="Handlers\PatrocinioConfigurationHandler.cs" />
     <Compile Include="Migrations.cs" />
-    <Compile Include="Models\Patrocinador.cs" />
-    <Compile Include="Models\PatrocinioAdminRecord.cs" />
+    <Compile Include="Models\PatrocinadorPart.cs" />
+    <Compile Include="Models\PatrocinadorRecord.cs" />
+    <Compile Include="Models\PatrocinioWidgetRecord.cs" />
     <Compile Include="Models\PatrocinioConfigurationRecord.cs" />
     <Compile Include="Models\PatrocinioLocalizacao.cs" />
     <Compile Include="Models\PatrocinioRecord.cs" />
     <Compile Include="ResourceManifest.cs" />
-    <Compile Include="Services\IPatrocinadoresService.cs" />
-    <Compile Include="Services\PatrocinadoresService.cs" />
+    <Compile Include="ViewModels\PatrocinadoresEditViewModel.cs" />
     <Compile Include="ViewModels\PatrocinadoresListaOptions.cs" />
     <Compile Include="ViewModels\PatrocinadoresListaViewModel.cs" />
   </ItemGroup>
@@ -125,7 +127,7 @@
     <Content Include="Views\Parts\PatrocinioConfiguration.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\PatrocinadoresAdmin\Index.cshtml" />
+    <Content Include="Views\PatrocinadoresAdmin\List.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Orchard.Patrocinadores.ViewModels
 {
-    public class PatrocinadoresListaOptions
+    public class PatrocinadoresListOptions
     {
         public string TextSearch { get; set; }
         public PatrocinadoresStatus Status { get; set; }
