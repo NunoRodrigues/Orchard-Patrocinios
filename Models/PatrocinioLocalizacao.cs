@@ -10,6 +10,7 @@ namespace Orchard.Patrocinadores.Models
         public int ID { get; set; }
         public string Nome { get; set; }
 
+        /*
         public static List<PatrocinioLocalizacao> getList()
         {
             List<PatrocinioLocalizacao> _localizacao = new List<PatrocinioLocalizacao>();
@@ -23,5 +24,6 @@ namespace Orchard.Patrocinadores.Models
 
             return _localizacao;
         }
+        */
     }
 }

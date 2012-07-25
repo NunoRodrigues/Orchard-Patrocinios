@@ -11,7 +11,8 @@ namespace Orchard.Patrocinadores.ViewModels
         public PatrocinadoresStatus Status { get; set; }
     }
 
-    public enum PatrocinadoresStatus {
+    public enum PatrocinadoresStatus
+    {
         Todos,
         ComAnunciosActivos,
         SemAnunciosActivos

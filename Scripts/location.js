@@ -6,7 +6,7 @@
                 height: 22,
                 top: 12,
                 left: 0,
-                color: '#F7C43C',
+                color: '#F7C43C !important',
                 title: 'Left'
             },
             {
@@ -15,7 +15,7 @@
                 height: 22,
                 top: 12,
                 left: 37,
-                color: '#A346EE',
+                color: '#A346EE !important',
                 title: 'Right'
             },
             {
@@ -24,7 +24,7 @@
                 height: 9,
                 top: 0,
                 left: 0,
-                color: '#349ED7',
+                color: '#349ED7 !important',
                 title: 'Top'
             },
             {
@@ -33,12 +33,12 @@
                 height: 9,
                 top: 37,
                 left: 0,
-                color: '#51DB5E',
+                color: '#51DB5E !important',
                 title: 'Bottom'
             }
             // Other Colors #F73BCC, #EE4F45
     ],
-    getNew: function (placeHolder, multipleSelection, clickFunction) {
+    getNew: function (placeHolder, multipleSelection, selectionChangedFunction) {
         // Grafico
         var itemContainer = $('<div class="LocationWidget"></div>');
 
@@ -62,10 +62,10 @@
                         item.attr('selected', true);
                     }
 
-                    // Refresh
+                    // Select - Refresh
                     select.show();
 
-                    // Fire Changed
+                    // Select - Fire Changed
                     select.change();
                 });
             } else {
@@ -75,15 +75,13 @@
 
                     select.val(data.id);
 
-                    // Refresh
+                    // Select - Refresh
                     select.show();
 
-                    // Fire Changed
+                    // Select - Fire Changed
                     select.change();
                 });
             }
-
-            item.click(value, clickFunction);
 
             itemContainer.append(item);
         });
@@ -111,6 +109,9 @@
             $(this).find('option:not(option:selected)').each(function (index, value) {
                 placeHolder.find('div.LocationWidgetItem[location-id="' + $(value).val() + '"]').fadeTo(200, 0.4);
             });
+
+            // External Events
+            if ($.isFunction(selectionChangedFunction)) selectionChangedFunction(this, multipleSelection);
         });
 
         // Combo

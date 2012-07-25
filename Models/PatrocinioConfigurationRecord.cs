@@ -20,6 +20,10 @@ namespace Orchard.Patrocinadores.Models
     /// </summary>
     public class PatrocinioConfigurationPart : ContentPart<PatrocinioConfigurationRecord>
     {
+        public PatrocinioConfigurationPart()
+        {
+        }
+
         [Required]
         public int IDTipo
         {
@@ -41,14 +45,18 @@ namespace Orchard.Patrocinadores.Models
             set { Record.URLImage = value; }
         }
 
-        public List<PatrocinioRecord> Patrocinios
+        private List<PatrocinadorRecord> _patrocinadores = null;
+        public List<PatrocinadorRecord> Patrocinadores
         {
-            get { return PatrocinioRecord.getList(1); }
+            get { return _patrocinadores; }
+            set { _patrocinadores = value; }
         }
 
+        /*
         public List<PatrocinioLocalizacao> Localizacoes
         {
             get { return PatrocinioLocalizacao.getList(); }
         }
+        */
     }
 }

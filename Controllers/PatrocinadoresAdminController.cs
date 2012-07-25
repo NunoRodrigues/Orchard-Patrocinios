@@ -14,92 +14,40 @@ using Orchard.Patrocinadores.ViewModels;
 using Orchard.Data;
 using Orchard.Patrocinadores.Handlers;
 using System.Collections.Generic;
+using Orchard.Patrocinadores.Services;
 
 namespace Orchard.Patrocinadores.Controllers
 {
     [Admin]
     public class PatrocinadoresAdminController : Controller, IUpdateModel
     {
-        /*
-        //private readonly IPatrocinadoresService _customerService;
-        private readonly IContentManager _contentManager;
-        private readonly ITransactionManager _transactionManager;
-        
-
-        public IOrchardServices Services { get; set; }
-        public ILogger Logger { get; set; }
-        public Localizer T { get; set; }
-        
-
-        public PatrocinadoresAdminController(
-            IOrchardServices services,
-            IContentManager contentManager,
-            ITransactionManager transactionManager,
-            ISiteService siteService,
-            IShapeFactory shapeFactory
-            ) { //IPatrocinadoresService patrocinadoresService
-            Services = services;
-            _contentManager = contentManager;
-            _transactionManager = transactionManager;
-            _siteService = siteService;
-            T = NullLocalizer.Instance;
-            Shape = shapeFactory;
-            //_customerService = patrocinadoresService;
-        }
-        */
-
+        private IPatrocinadoresService _dataService;
         private readonly ISiteService _siteService;
-        private IRepository<PatrocinadorRecord> _repository;
         private dynamic Shape { get; set; }
+        //private readonly IContentManager _contentManager;
+        //private readonly ITransactionManager _transactionManager;
 
-        public PatrocinadoresAdminController(   IRepository<PatrocinadorRecord> repository
+        //public IOrchardServices Services { get; set; }
+        //public ILogger Logger { get; set; }
+        //public Localizer T { get; set; }
+
+        public PatrocinadoresAdminController(   IPatrocinadoresService patrocinadoresService
                                                 , ISiteService siteService
                                                 , IShapeFactory shapeFactory)
         {
-            this._repository = repository;
+            this._dataService = patrocinadoresService;
             this._siteService = siteService;
             this.Shape = shapeFactory;
         }
-
-        /*
-        public PatrocinadoresAdminController(
-            IOrchardServices services,
-            IPatrocinadoresService patrocinadoresService, 
-            ISiteService siteService,
-            IShapeFactory shapeFactory) {
-                _customerService = patrocinadoresService;
-            _siteService = siteService;
-            Services = services;
-            Logger = NullLogger.Instance;
-            T = NullLocalizer.Instance;
-            Shape = shapeFactory;
-        }
-        */
-
         
         public ActionResult List(PagerParameters pagerParameters, PatrocinadoresListOptions options)
         {
-            // The pager is used to apply paging on the query and to create a PagerShape
-            var pager = new Pager(_siteService.GetSiteSettings(), pagerParameters.Page, pagerParameters.PageSize);
-
-            IQueryable<PatrocinadorRecord> records = _repository.Table;
-
-            if (!string.IsNullOrEmpty(options.TextSearch))
-            {
-                records = records.Where(p => p.Nome.Contains(options.TextSearch) || p.ContactoNome.Contains(options.TextSearch) || p.ContactoTelefone.Contains(options.TextSearch) || p.ContactoEmail.Contains(options.TextSearch));
-            }
-
-            // Apply paging
-            records = records.Skip(pager.GetStartIndex()).Take(pager.PageSize);
-
-            // Construct a Pager shape
-            var pagerShape = Shape.Pager(pager).TotalItemCount(records.Count());
+            List<PatrocinadorRecord> records = _dataService.List(pagerParameters, null, options.TextSearch);
 
             var model = new PatrocinadoresListViewModel()
             {
-                Pager = pagerShape,
                 Options = options,
-                Patrocinadores = records.ToList()
+                Patrocinadores = records
             };
 
             return View(model);
@@ -107,9 +55,11 @@ namespace Orchard.Patrocinadores.Controllers
 
         public ActionResult Edit(int id)
         {
+            PatrocinadorRecord val = _dataService.GetById(id);
+
             var model = new PatrocinadoresEditViewModel()
             {
-                Record = _repository.Table.FirstOrDefault(i => i.Id == id)
+                Record = val
             };
 
             return View(model);
@@ -121,7 +71,7 @@ namespace Orchard.Patrocinadores.Controllers
             var viewModel = new PatrocinadoresEditViewModel();
             UpdateModel(viewModel);
 
-            _repository.Update(viewModel.Record);
+            _dataService.Update(viewModel.Record);
 
             return RedirectToAction("List");
         }

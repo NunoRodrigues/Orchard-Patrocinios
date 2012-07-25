@@ -12,64 +12,70 @@
     <script type ="text/javascript">
         //<![CDATA[
 
-        var patrocinadores = [
-            { id: 1, nome: 'Skol' },
-            { id: 2, nome: 'Brahma' },
-            { id: 3, nome: 'Antarctica' },
-            { id: 4, nome: 'Nova Schin' }
-        ];
+        // Data - Patrocinadores
+        var patrocinadores = @Html.Raw(Json.Encode(Model.Patrocinadores));
 
-        var data = [
+        // Data - Events
+        var events = [
                     {
-                        title: patrocinadores[0].nome,
+                        title: patrocinadores[0].Nome,
                         start: new Date(2012, 5, 15),
                         end: new Date(2012, 6, 14),
-                        backgroundColor: '#F7C43C !important',
+                        backgroundColor: LocationWidget.regions[0].color, 
                         textColor: '#FFFFFF !important',
 
                         id: 1,
-                        patrocinador: patrocinadores[0],
-                        region: LocationWidget.region[0]
-                    },
-                    {
-                        title: 'Brahma',
-                        start: new Date(2012, 6, 1),
-                        end: new Date(2012, 6, 31),
-                        backgroundColor: '#A346EE !important',
-                        textColor: '#FFFFFF !important',
-                        id: 2,
-                        patrocinador: patrocinadores[1]
-                    },
-                    {
-                        title: 'Antarctica',
-                        start: new Date(2012, 6, 15),
-                        end: new Date(2012, 7, 14),
-                        backgroundColor: '#F7C43C !important',
-                        textColor: '#FFFFFF !important',
-                        id: 3,
-                        patrocinador: patrocinadores[2]
-                    },
-                    {
-                        title: 'Skol',
-                        start: new Date(2012, 6, 1),
-                        end: new Date(2012, 6, 31),
-                        backgroundColor: '#349ED7 !important',
-                        textColor: '#FFFFFF !important',
-                        id: 4,
+                        idTipo: 1,
                         patrocinador: patrocinadores[0]
                     },
                     {
-                        title: 'Nova Schin',
+                        title: patrocinadores[1].Nome,
+                        start: new Date(2012, 6, 1),
+                        end: new Date(2012, 6, 31),
+                        backgroundColor: LocationWidget.regions[1].color,
+                        textColor: '#FFFFFF !important',
+                        
+                        id: 2,
+                        idTipo: 2,
+                        patrocinador: patrocinadores[1]
+                    },
+                    {
+                        title: patrocinadores[2].Nome,
+                        start: new Date(2012, 6, 15),
+                        end: new Date(2012, 7, 14),
+                        backgroundColor: LocationWidget.regions[0].color,
+                        textColor: '#FFFFFF !important',
+
+                        id: 3,
+                        idTipo: 1,
+                        patrocinador: patrocinadores[2]
+                    },
+                    {
+                        title: patrocinadores[0].Nome,
+                        start: new Date(2012, 6, 1),
+                        end: new Date(2012, 6, 31),
+                        backgroundColor: LocationWidget.regions[2].color,
+                        textColor: '#FFFFFF !important',
+
+                        id: 4,
+                        idTipo: 3,
+                        patrocinador: patrocinadores[0]
+                    },
+                    {
+                        title: patrocinadores[3].Nome,
                         start: new Date(2012, 5, 1),
                         end: new Date(2012, 7, 31),
-                        backgroundColor: '#51DB5E !important',
+                        backgroundColor: LocationWidget.regions[3].color,
                         textColor: '#FFFFFF !important',
+
                         id: 5,
+                        idTipo: 4,
                         patrocinador: patrocinadores[3]
                     }
 
         ];
 
+        // Detail - Show
         function showDetail(startDate, endDate, idDetail) {
             var dlg = $("div#dialog");
 
@@ -77,7 +83,7 @@
 
             if (parseInt(idDetail) > 0) {
                 // Alteração
-                var itemData = jQuery.grep(data, function (item, index) {
+                var itemData = jQuery.grep(events, function (item, index) {
                     return item.id == idDetail;
                 })[0];
 
@@ -102,30 +108,64 @@
             });
         }
 
+        // Calendar - 
+        var calendar = null;
+
+        function drawCalendar(data) {
+            if(calendar == null) {
+                // New Calendar
+                calendar = $('#calendar').fullCalendar({
+                    selectable: true,
+                    select: function (startDate, endDate, allDay, jsEvent, view) {
+                        // Open Dialog
+                        showDetail(startDate, endDate);
+                    },
+                    eventClick: function(calEvent, jsEvent, view) {
+                        showDetail(calEvent._start, calEvent._end, calEvent.id);
+
+                        // change the border color just for fun
+                        $(this).css('border-color', 'red');
+
+                    },
+                    events: data
+                });
+            } else {
+                // Reuse Calendar
+                var cal = $('#calendar')
+                cal.fullCalendar('removeEvents');
+                cal.fullCalendar( 'addEventSource', data );
+            }
+        }
+
+        function filterEvents(data, zonaIds) {
+            if(!jQuery.isArray(zonaIds)) zonaIds = [zonaIds];
+
+            var itemData = jQuery.grep(events, function (item, index) {
+                return jQuery.inArray(item.idTipo.toString(), zonaIds) >= 0;
+            });
+
+            return itemData;
+        }
+
+        // Document - Init
         $(document).ready(function () { 
 
             // Calendar - Filter
-            LocationWidget.getNew($('#LocationFilter'), true);
+            LocationWidget.getNew($('#LocationFilter'), true, function(sender, multipleSelection) {
+                var values = $(sender).val();
 
-            // Calendar - Init
-            $('#calendar').fullCalendar({
-                selectable: true,
-                select: function (startDate, endDate, allDay, jsEvent, view) {
-                    // Open Dialog
-                    showDetail(startDate, endDate);
-                },
-                eventClick: function(calEvent, jsEvent, view) {
-                    showDetail(calEvent._start, calEvent._end, calEvent.id);
+                if(values == null || !(values.length >= 0)) values = ["1"];
 
-                    // change the border color just for fun
-                    $(this).css('border-color', 'red');
-
-                },
-                events: data
+                drawCalendar(filterEvents(events, values));
             });
 
+            // Calendar - Init
+            //drawCalendar(events);
+
             // Edit - Fields
-            LocationWidget.getNew($('#LocationEditWidget'), false);
+            LocationWidget.getNew($('#LocationEditWidget'), false, function(sender, multipleSelection) {
+                var values = $(sender).val();
+            });
             $("#DataInicio").datepicker({ dateFormat: 'yy-mm-dd' });
             $("#DataFim").datepicker({ dateFormat: 'yy-mm-dd' });
         });
@@ -134,7 +174,9 @@
 }
 <h2>Patrocinadores</h2>
 <fieldset>
-    <div id="LocationFilter"></div>
+    <div>
+        <span id="LocationFilter"></span>
+    </div>
     <div id='calendar'></div>
 </fieldset>
 <div id="dialog" title="Patrocínio" style="display:none;">
@@ -154,10 +196,6 @@
     <fieldset>
         @Html.LabelFor(widget => widget.IDPatrocinador, T("Patrocinador"))
         @Html.DropDownList("IDPatrocinador", new SelectList(Model.Patrocinadores, "ID", "Nome"))
-    </fieldset>
-    <fieldset>
-        @Html.LabelFor(widget => widget.URLImage, T("URLImage"))
-        @Html.TextBoxFor(widget => widget.URLImage, new { @class = "text text-small"})
     </fieldset>
 </div>
 

@@ -107,6 +107,8 @@
     <Compile Include="Models\PatrocinioLocalizacao.cs" />
     <Compile Include="Models\PatrocinioRecord.cs" />
     <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Services\IPatrocinadoresService.cs" />
+    <Compile Include="Services\PatrocinadoresService.cs" />
     <Compile Include="ViewModels\PatrocinadoresEditViewModel.cs" />
     <Compile Include="ViewModels\PatrocinadoresListaOptions.cs" />
     <Compile Include="ViewModels\PatrocinadoresListaViewModel.cs" />

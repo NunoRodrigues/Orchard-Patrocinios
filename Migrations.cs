@@ -86,11 +86,25 @@ namespace Orchard.Patrocinadores
          
             return 4;
         }
-		
-        /*
-        public int UpdateFrom4() {
+
+        public int UpdateFrom4()
+        {
+            SchemaBuilder.CreateTable(typeof(PatrocinioConfigurationRecord).Name, table => table
+                .ContentPartRecord()
+                .Column("IdTipo", DbType.Int32)
+                .Column("IdPatrocinador", DbType.Int32)
+                .Column("URLImage", DbType.String)
+            );
+
+            // Foreign Key
+            SchemaBuilder.CreateForeignKey("FK_" + typeof(PatrocinioConfigurationRecord).Name + "_" + typeof(PatrocinadorRecord).Name + "IdPatrocinador"
+                , "Patrocinadores"
+                , typeof(PatrocinioConfigurationRecord).Name
+                , new[] { "IdPatrocinador" }
+                , typeof(PatrocinadorRecord).Name
+                , new[] { "Id" });
+
             return 5;
         }
-        */
     }
 }

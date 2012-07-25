@@ -7,19 +7,29 @@ using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 
 using Orchard.Patrocinadores.Models;
+using Orchard.Patrocinadores.Services;
 
 namespace Orchard.Patrocinadores.Drivers
 {
     public class PatrocinioConfigurationDriver : ContentPartDriver<PatrocinioConfigurationPart>
     {
+        private IPatrocinadoresService _patrocinadoresService;
+
+        public PatrocinioConfigurationDriver(IPatrocinadoresService patrocinadoresService)
+        {
+            _patrocinadoresService = patrocinadoresService;
+        }
+
         protected override DriverResult Display(PatrocinioConfigurationPart part, string displayType, dynamic shapeHelper)
         {
-            return ContentShape("Parts_PatrocinioConfiguration", () => shapeHelper.Parts_PatrocinioConfiguration(IDTipo: part.IDTipo, IDPatrocinador: part.IDPatrocinador, URLImage: part.URLImage));
+            return ContentShape("Parts_PatrocinioConfiguration", () => shapeHelper.Parts_PatrocinioConfiguration(IDTipo: part.IDTipo, IDPatrocinador: part.IDPatrocinador, URLImage: part.URLImage, Patrocinadores: _patrocinadoresService.ListAll()));
         }
 
         //GET
         protected override DriverResult Editor(PatrocinioConfigurationPart part, dynamic shapeHelper)
         {
+            part.Patrocinadores = _patrocinadoresService.ListAll();
+
             return ContentShape("Parts_PatrocinioConfiguration_Edit", () => shapeHelper.EditorTemplate(TemplateName: "Parts/PatrocinioConfiguration", Model: part, Prefix: Prefix));
         }
 
