@@ -1,0 +1,236 @@
+﻿@model Orchard.Patrocinadores.Models.PatrociniosPart
+@{
+    Style.Require("Patrocionadores_Calendar").AtHead();
+    Style.Require("Patrocionadores_CalendarPrint").AtHead();
+    Style.Require("Patrocionadores_LocationWidget").AtHead();
+
+    Script.Require("Patrocionadores_Calendar").AtFoot();
+    Script.Require("Patrocionadores_Location").AtFoot();
+    
+}
+@using(Script.Foot()) {
+    <script type ="text/javascript">
+        //<![CDATA[
+
+        function AddAntiForgeryToken(data) {
+            data.__RequestVerificationToken = $('[name=__RequestVerificationToken]').val();
+            return data;
+        };
+
+        function parseDateFromMVC(date) {
+            return new Date(parseInt(date.replace(/\/Date\((\d+)\)\//gi, "$1")));
+        }
+
+        var ModelId = '@Model.Id';
+
+        // Data - Raw - Patrocinadores
+        var patrocinadores = @Html.Raw(Json.Encode(Model.Patrocinadores));
+
+        // Data - Raw - Patrocinios
+        var patrocinios = @Html.Raw(Json.Encode(Model.CurrentPatrocinios));
+
+        // Data - Events
+        var events = [];
+
+        // Events - GetAll
+        function getEvents() {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetResults", "PatrociniosControler", new { area = "Patrocinadores" })',
+                data: {  },
+                success: function (response) {
+                    alert(response);
+                },
+                error: function () {
+                    alert('error');
+                }
+            });
+        }
+
+        // Calendar - 
+        var calendar = null;
+
+        function drawCalendar(data) {
+            if(calendar == null) {
+                // New Calendar
+                calendar = $('#calendar').fullCalendar({
+                    selectable: true,
+                    select: function (startDate, endDate, allDay, jsEvent, view) {
+                        // New Event
+                        showDetail(startDate, endDate);
+                    },
+                    eventClick: function(calEvent, jsEvent, view) {
+                        // Edit Event
+                        showDetail(calEvent._start, calEvent._end, calEvent.Id);
+                    },
+                    events: data
+                });
+            } else {
+                // Reuse Calendar
+                var cal = $('#calendar')
+                cal.fullCalendar('removeEvents');
+                cal.fullCalendar( 'addEventSource', data );
+            }
+        }
+
+        function filterEvents(data, zonaIds) {
+            if(!jQuery.isArray(zonaIds)) zonaIds = [zonaIds];
+
+            var itemData = jQuery.grep(events, function (item, index) {
+                return jQuery.inArray(item.IdTipo.toString(), zonaIds) >= 0;
+            });
+
+            return itemData;
+        }
+
+        // Calendar - Load
+        function loadCalendar() {
+            debugger;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("List", "PatrociniosControler", new { area = "Patrocinadores" })',
+                data: AddAntiForgeryToken({modelId : ModelId}),
+                success: function (response) {
+
+                    debugger;
+                    // Save Original Data
+                    patrocinios = response;
+
+                    // Parse Data for the Calendar
+                    events.length = 0;
+                    $.each(patrocinios, function(key, value) { 
+                        events[key] = {
+                            title: value.PatrocinadorRecord.Nome,
+                            start: parseDateFromMVC(value.DataInicio),
+                            end: parseDateFromMVC(value.DataFim),
+                            backgroundColor: LocationWidget.getRegion(value.IdTipo).color, 
+                            textColor: '#FFFFFF !important',
+
+                            Id: value.Id,
+                            IdTipo: value.IdTipo,
+                            patrocinador: value.PatrocinadorRecord
+                        }
+                    });
+
+                    // Calendar - Draw
+                    drawCalendar(events);
+                },
+                error: function () {
+                    alert('NETWORK ERROR');
+                }
+            });
+        }
+
+        // Detail - Save
+        function saveDetail(idDetail, startDate, endData, idPatrocinador, urlImage) {
+            var token = $('[name=__RequestVerificationToken]').val();
+
+            var detail = {"PatrociniosPartRecord_Id":ModelId,"Id":idDetail,"patrocinadorID":idPatrocinador,"IdTipo":1,"DataInicio":startDate,"DataFim":endData,"URLImage":urlImage};
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Save", "PatrociniosControler", new { area = "Patrocinadores" })',
+                data: AddAntiForgeryToken(detail),
+                success: function (response) {
+                    if(response) {
+                        alert('OK');
+                    } else {
+                        alert('BUSINESS ERROR');
+                    }
+                },
+                error: function () {
+                    alert('NETWORK ERROR');
+                }
+            });
+        }
+
+        // Detail - Show
+        function showDetail(startDate, endDate, idDetail) {
+            var dlg = $("div#dialog");
+
+            // Title
+
+            if (parseInt(idDetail) > 0) {
+                // Alteração
+                var itemData = jQuery.grep(events, function (item, index) {
+                    return item.Id == idDetail;
+                })[0];
+
+                dlg.find('intput#PatrocinioId').val(itemData.Id);
+
+                dlg.find('select.LocationWidgetSelect').val(itemData.IdTipo);
+                dlg.find('select.LocationWidgetSelect').change();
+
+                dlg.find('#DataInicio').datepicker("setDate", itemData.start);
+                dlg.find('#DataFim').datepicker("setDate", itemData.end);
+
+                dlg.find('select#PatrocinadorID').val(itemData.patrocinador.Id);
+            } else {
+                // Novo
+
+                dlg.find('#DataInicio').datepicker("setDate", startDate);
+                dlg.find('#DataFim').datepicker("setDate", endDate);
+
+                //dlg.find('#IDPatrocinador').val(Patrocinador)
+            }
+
+            dlg.dialog({
+                open: function () {
+                    jQuery('input:first').blur();
+                    jQuery('#ui-datepicker-div').hide();
+                },
+            });
+        }
+
+        // Document - Init
+        $(document).ready(function () { 
+
+            // Calendar - Filter
+            LocationWidget.getNew($('#LocationFilter'), true, function(sender, multipleSelection) {
+                var values = $(sender).val();
+
+                if(values == null || !(values.length >= 0)) values = ["1"];
+
+                drawCalendar(filterEvents(events, values));
+            });
+
+            // Calendar - Init
+            loadCalendar();
+
+            // Edit - Fields
+            LocationWidget.getNew($('#LocationEditWidget'), false, function(sender, multipleSelection) {
+                var values = $(sender).val();
+            });
+            $("#DataInicio").datepicker({ dateFormat: 'yy-mm-dd' });
+            $("#DataFim").datepicker({ dateFormat: 'yy-mm-dd' });
+        });
+        //]]>
+    </script>
+}
+<h2>Patrocinadores</h2>
+<fieldset>
+    <div>
+        <span id="LocationFilter"></span>
+    </div>
+    <div id='calendar'></div>
+</fieldset>
+
+<div id="dialog" title="Patrocínio" style="display:none;">
+    <input type="hidden" id="PatrocinioId" name="PatrocinioId" value="0" />
+    <fieldset>
+        <label>Localização</label>
+        <div id="LocationEditWidget"></div>
+    </fieldset>
+    <fieldset>
+        <label>Início</label>
+        <input type="text" id="DataInicio" />
+    </fieldset>
+    <fieldset>
+        <label>Fim</label>
+        <input type="text" id="DataFim" />
+    </fieldset>
+    <fieldset>
+        <label>Patrocinador</label>
+        @Html.DropDownList("PatrocinadorID",new SelectList(Model.Patrocinadores, "Id", "Nome"))
+    </fieldset>
+</div>
