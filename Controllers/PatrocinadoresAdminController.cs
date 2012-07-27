@@ -92,6 +92,12 @@ namespace Orchard.Patrocinadores.Controllers
             return Edit(pagerParameters, input);
         }
 
+        public JsonResult GetResults()
+        {
+            var json = DateTime.Now.ToString();
+            return Json(json, JsonRequestBehavior.AllowGet);
+        }
+
         bool IUpdateModel.TryUpdateModel<TModel>(TModel model, string prefix, string[] includeProperties, string[] excludeProperties)
         {
             return TryUpdateModel(model, prefix, includeProperties, excludeProperties);

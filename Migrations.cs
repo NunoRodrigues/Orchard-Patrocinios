@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using Orchard.ContentManagement.MetaData;
 using Orchard.Core.Contents.Extensions;
 using Orchard.Data;
@@ -46,21 +47,7 @@ namespace Orchard.Patrocinadores
                 .WithPart("CommonPart")
                 .WithSetting("Stereotype", "Widget"));
 
-            return 1;
-        }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns>Tem de ser "2" porque a função se chama "UpdateFrom1"</returns>
-        public int UpdateFrom1()
-        {
-         
-            return 2;
-        }
-
-        
-        public int UpdateFrom2() {
             // Patrocinadores - Tabela
             SchemaBuilder.CreateTable(typeof(PatrocinadorRecord).Name, table => table
                 .Column<int>("Id", col => col.PrimaryKey().Identity())
@@ -71,40 +58,58 @@ namespace Orchard.Patrocinadores
                 .Column("Observacoes", DbType.String)
             );
 
-            /*
-            _patrocinadorRepository.Create(new PatrocinadorRecord() { Nome = "AAA" });
-            _patrocinadorRepository.Create(new PatrocinadorRecord() { Nome = "BBB" });
-            _patrocinadorRepository.Create(new PatrocinadorRecord() { Nome = "CCC" });
-            */
 
-            return 3;
-        }
-
-        public int UpdateFrom3() {
-            // Configuração
-            ContentDefinitionManager.AlterPartDefinition(typeof(PatrocinioConfigurationPart).Name, cfg => cfg.Attachable());
-         
-            return 4;
-        }
-
-        public int UpdateFrom4()
-        {
-            SchemaBuilder.CreateTable(typeof(PatrocinioConfigurationRecord).Name, table => table
+            // PatrocinioPart - Tabela 
+            SchemaBuilder.CreateTable(typeof(PatrociniosPartRecord).Name, table => table
                 .ContentPartRecord()
-                .Column("IdTipo", DbType.Int32)
-                .Column("IdPatrocinador", DbType.Int32)
-                .Column("URLImage", DbType.String)
             );
 
-            // Foreign Key
-            SchemaBuilder.CreateForeignKey("FK_" + typeof(PatrocinioConfigurationRecord).Name + "_" + typeof(PatrocinadorRecord).Name + "IdPatrocinador"
+
+            // Patrocinio - Tabela
+            SchemaBuilder.CreateTable(typeof(PatrocinioItemRecord).Name, table => table
+                .Column<int>("Id", column => column.PrimaryKey().Identity())
+                .Column<int>(typeof(PatrociniosPartRecord).Name + "_Id", c => c.NotNull())
+                .Column<int>(typeof(PatrocinadorRecord).Name + "_Id", c => c.NotNull())
+                .Column<int>("IdTipo")
+                .Column<DateTime>("DataInicio")
+                .Column<DateTime>("DataFim")
+                .Column<string>("URLImage")
+            );
+
+            // Patrocinio - Foreign Key com Patrocinadores
+            SchemaBuilder.CreateForeignKey("FK_" + typeof(PatrocinioItemRecord).Name + "_" + typeof(PatrocinadorRecord).Name
                 , "Patrocinadores"
-                , typeof(PatrocinioConfigurationRecord).Name
-                , new[] { "IdPatrocinador" }
+                , typeof(PatrocinioItemRecord).Name
+                , new[] { typeof(PatrocinadorRecord).Name + "_Id" }
                 , typeof(PatrocinadorRecord).Name
                 , new[] { "Id" });
 
-            return 5;
+            // Patrocinio - Foreign Key com Part
+            SchemaBuilder.CreateForeignKey("FK_" + typeof(PatrocinioItemRecord).Name + "_" + typeof(PatrociniosPartRecord).Name
+                , "Patrocinadores"
+                , typeof(PatrocinioItemRecord).Name
+                , new[] { typeof(PatrociniosPartRecord).Name + "_Id" }
+                , typeof(PatrociniosPartRecord).Name
+                , new[] { "Id" });
+
+
+            // Configuração - Patrocinio
+            ContentDefinitionManager.AlterPartDefinition(typeof(PatrociniosPart).Name, cfg => cfg.Attachable());
+
+            return 1;
         }
+
+        /*
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Tem de ser "2" porque a função se chama "UpdateFrom1"</returns>
+        public int UpdateFrom1()
+        {
+
+
+            return 2;
+        }
+        */
     }
 }

@@ -8,9 +8,9 @@ using Orchard.Patrocinadores.Models;
 
 namespace Orchard.Patrocinadores.Handlers
 {
-    public class PatrocinioConfigurationHandler : ContentHandler
+    public class PatrociniosHandler : ContentHandler
     {
-        public PatrocinioConfigurationHandler(IRepository<PatrocinioConfigurationRecord> repository)
+        public PatrociniosHandler(IRepository<PatrociniosPartRecord> repository)
         {
             Filters.Add(StorageFilter.For(repository));
         }

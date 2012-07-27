@@ -88,7 +88,7 @@
         placeHolder.append(itemContainer);
 
         // Combo
-        var combo = combo = $('<select id="" class="LocationWidgetSelect"></select>');
+        var combo = combo = $('<select class="LocationWidgetSelect"></select>');
 
         // Combo - Multiselection
         if (multipleSelection) {
@@ -118,12 +118,21 @@
         placeHolder.append(combo);
         combo.change();
     },
-    getValues: function (placeHolder) {
-        return $(placeHolder).find('select').val();
-    },
-    setValues: function (placeHolder, values) {
+    getRegion: function (idTipo) {
+        var result = null;
+        idTipo = parseInt(idTipo, 10);
+
         $.each(this.regions, function (index, value) {
-            alert('TODO');
+            if(value.id == idTipo) {
+                result = value;
+                return false; //neste caso, equivalente a um "break"
+            }
         });
+
+        return result;
+    },
+    setValue: function (source, idTipo) {
+        var select = $(source).find('select');
+        debugger;
     }
 }

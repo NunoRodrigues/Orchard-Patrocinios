@@ -95,20 +95,23 @@
   <ItemGroup>
     <Compile Include="AdminMenu.cs" />
     <Compile Include="Controllers\PatrocinadoresAdminController.cs" />
+    <Compile Include="Controllers\PatrociniosControler.cs" />
     <Compile Include="Drivers\PatrocinioWidgetDriver.cs" />
-    <Compile Include="Drivers\PatrocinioConfigurationDriver.cs" />
+    <Compile Include="Drivers\PatrociniosDriver.cs" />
     <Compile Include="Handlers\PatrocinioWidgetHandler.cs" />
     <Compile Include="Handlers\PatrocinioConfigurationHandler.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\PatrocinadorPart.cs" />
     <Compile Include="Models\PatrocinadorRecord.cs" />
+    <Compile Include="Models\PatrocinioItemRecord.cs" />
+    <Compile Include="Models\PatrociniosPart.cs" />
+    <Compile Include="Models\PatrociniosPartRecord.cs" />
     <Compile Include="Models\PatrocinioWidgetRecord.cs" />
-    <Compile Include="Models\PatrocinioConfigurationRecord.cs" />
-    <Compile Include="Models\PatrocinioLocalizacao.cs" />
-    <Compile Include="Models\PatrocinioRecord.cs" />
     <Compile Include="ResourceManifest.cs" />
     <Compile Include="Services\IPatrocinadoresService.cs" />
+    <Compile Include="Services\IPatrocinioService.cs" />
     <Compile Include="Services\PatrocinadoresService.cs" />
+    <Compile Include="Services\PatrocinioService.cs" />
     <Compile Include="ViewModels\PatrocinadoresEditViewModel.cs" />
     <Compile Include="ViewModels\PatrocinadoresListaOptions.cs" />
     <Compile Include="ViewModels\PatrocinadoresListaViewModel.cs" />
@@ -123,10 +126,10 @@
     <Content Include="placement.info" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\EditorTemplates\Parts\PatrocinioConfiguration.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\Patrocinios.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Parts\PatrocinioConfiguration.cshtml" />
+    <Content Include="Views\Parts\Patrocinios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\PatrocinadoresAdmin\List.cshtml" />

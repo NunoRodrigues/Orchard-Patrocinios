@@ -13,27 +13,27 @@
     @Html.HiddenFor(m => m.Record.Id, T("Id"))
     <fieldset>
         @Html.LabelFor(m => m.Record.Nome, T("Nome"))
-        @Html.TextBoxFor(m=>m.Record.Nome, new { @class = "textMedium" })
+        @Html.TextBoxFor(m=>m.Record.Nome, new { @class = "textMedium", @maxlength="255" })
         @Html.ValidationMessageFor(m=>m.Record.Nome, "*")
     </fieldset>
     <fieldset>
         @Html.LabelFor(m => m.Record.ContactoNome, T("Nome de Contato"))
-        @Html.TextBoxFor(m=>m.Record.ContactoNome, new { @class = "textMedium" })
+        @Html.TextBoxFor(m=>m.Record.ContactoNome, new { @class = "textMedium", @maxlength="255" })
         @Html.ValidationMessageFor(m=>m.Record.ContactoNome, "*")
     </fieldset>
     <fieldset>
         @Html.LabelFor(m => m.Record.ContactoTelefone, T("Telefone"))
-        @Html.TextBoxFor(m=>m.Record.ContactoTelefone, new { @class = "textMedium" })
+        @Html.TextBoxFor(m=>m.Record.ContactoTelefone, new { @class = "textMedium", @maxlength="255" })
         @Html.ValidationMessageFor(m=>m.Record.ContactoTelefone, "*")
     </fieldset>
     <fieldset>
         @Html.LabelFor(m => m.Record.ContactoEmail, T("Email"))
-        @Html.TextBoxFor(m=>m.Record.ContactoEmail, new { @class = "textMedium" })
+        @Html.TextBoxFor(m=>m.Record.ContactoEmail, new { @class = "textMedium", @maxlength="255" })
         @Html.ValidationMessageFor(m=>m.Record.ContactoEmail, "*")
     </fieldset>
     <fieldset>
         @Html.LabelFor(m => m.Record.Observacoes, T("Observações"))
-        @Html.TextBoxFor(m=>m.Record.Observacoes, new { @class = "textMedium" })
+        @Html.TextAreaFor(m=>m.Record.Observacoes, new { @class = "textMedium", @maxlength="255" })
         @Html.ValidationMessageFor(m=>m.Record.Observacoes, "*")
     </fieldset>
     <fieldset>
