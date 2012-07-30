@@ -1,6 +1,11 @@
 ﻿@model Orchard.Patrocinadores.Models.PatrocinioWidgetPart
 <h2>Patrocinio - Espaço</h2>
 <fieldset>
+    @Html.LabelFor(widget => widget.Width, T("Posição"))
+    @Html.DropDownList("PatrociniosPartRecord_Id",new SelectList(Model.WidgetTipoRecord, "Id", "Tipo"))
+    <span class="hint">@T("Largura (em Pixels) da região disponivel para Patrocinio")</span>
+</fieldset>
+<fieldset>
     @Html.LabelFor(widget => widget.Width, T("Width"))
     @Html.TextBoxFor(widget => widget.Width, new { @class = "text text-small"})
     <span class="hint">@T("Largura (em Pixels) da região disponivel para Patrocinio")</span>

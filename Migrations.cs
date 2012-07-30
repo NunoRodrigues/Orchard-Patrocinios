@@ -14,10 +14,11 @@ namespace Orchard.Patrocinadores
     public class Migrations : DataMigrationImpl
     {
 
-        private IRepository<PatrocinadorRecord> _patrocinadorRepository;
-        public Migrations(IRepository<PatrocinadorRecord> patrocinadorRepository)
+        private IRepository<PatrocinioWidgetTipoRecord> _widgetTipoRecord;
+
+        public Migrations(IRepository<PatrocinioWidgetTipoRecord> widgetTipoRecord, IRepository<PatrocinioWidgetTipoPart> widgetTipoRecord2)
         {
-            _patrocinadorRepository = patrocinadorRepository;
+            _widgetTipoRecord = widgetTipoRecord;
         }
         /// <summary>
         ///     Primeiro Metodo que é chamado quando se instala o Modulo.
@@ -30,11 +31,30 @@ namespace Orchard.Patrocinadores
         /// </returns>
         public int Create()
         {
+
+            // WidgetTipo - Tabela
+            SchemaBuilder.CreateTable(typeof(PatrocinioWidgetTipoRecord).Name, table => table
+                .Column<int>("Id", column => column.PrimaryKey().Identity())
+                .Column("Tipo", DbType.String)
+                .Column("Width", DbType.Int32)
+                .Column("Height", DbType.Int32)
+                .Column("PosTop", DbType.Int32)
+                .Column("PosLeft", DbType.Int32)
+                .Column("Color", DbType.String)
+            );
+
+            // WidgetTipo - Dados
+            _widgetTipoRecord.Update(new PatrocinioWidgetTipoRecord() { Id = 1, Tipo = "Left", Width = 9, Height = 22, PosTop = 12, PosLeft = 0, Color = "#F7C43C !important" });
+            _widgetTipoRecord.Update(new PatrocinioWidgetTipoRecord() { Id = 2, Tipo = "Right", Width = 9, Height = 22, PosTop = 12, PosLeft = 37, Color = "#A346EE !important" });
+            _widgetTipoRecord.Update(new PatrocinioWidgetTipoRecord() { Id = 3, Tipo = "Top", Width = 46, Height = 9, PosTop = 0, PosLeft = 0, Color = "#349ED7 !important" });
+            _widgetTipoRecord.Update(new PatrocinioWidgetTipoRecord() { Id = 4, Tipo = "Bottom", Width = 46, Height = 9, PosTop = 37, PosLeft = 0, Color = "#51DB5E !important" });
+
             // Widget - Tabela
             SchemaBuilder.CreateTable(typeof(PatrocinioWidgetRecord).Name, table => table
                 .ContentPartRecord()
                 .Column("Width", DbType.Int32)
                 .Column("Height", DbType.Int32)
+                .Column(typeof(PatrocinioWidgetTipoRecord).Name + "_Id", DbType.Int32)
             );
 
             // Widget - 
@@ -47,6 +67,13 @@ namespace Orchard.Patrocinadores
                 .WithPart("CommonPart")
                 .WithSetting("Stereotype", "Widget"));
 
+            // Widget - Foreign Key com WidgetTipo
+            SchemaBuilder.CreateForeignKey("FK_" + typeof(PatrocinioWidgetRecord).Name + "_" + typeof(PatrocinioWidgetTipoRecord).Name
+                , "Patrocinadores"
+                , typeof(PatrocinioWidgetRecord).Name
+                , new[] { typeof(PatrocinioWidgetTipoRecord).Name + "_Id" }
+                , typeof(PatrocinioWidgetTipoRecord).Name
+                , new[] { "Id" });
 
             // Patrocinadores - Tabela
             SchemaBuilder.CreateTable(typeof(PatrocinadorRecord).Name, table => table
@@ -70,7 +97,7 @@ namespace Orchard.Patrocinadores
                 .Column<int>("Id", column => column.PrimaryKey().Identity())
                 .Column<int>(typeof(PatrociniosPartRecord).Name + "_Id", c => c.NotNull())
                 .Column<int>(typeof(PatrocinadorRecord).Name + "_Id", c => c.NotNull())
-                .Column<int>("IdTipo")
+                .Column<int>(typeof(PatrocinioWidgetTipoRecord).Name + "_Id", c => c.NotNull())
                 .Column<DateTime>("DataInicio")
                 .Column<DateTime>("DataFim")
                 .Column<string>("URLImage")
@@ -107,7 +134,7 @@ namespace Orchard.Patrocinadores
         public int UpdateFrom1()
         {
 
-
+           
             return 2;
         }
         */

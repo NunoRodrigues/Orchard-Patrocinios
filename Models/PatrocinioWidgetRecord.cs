@@ -12,6 +12,7 @@ namespace Orchard.Patrocinadores.Models
     {
         public virtual int Width { get; set; }
         public virtual int Height { get; set; }
+        public virtual int PatrocinioWidgetTipoRecord_Id { get; set; }
     }
 
     public class PatrocinioWidgetPart : ContentPart<PatrocinioWidgetRecord>
@@ -28,6 +29,19 @@ namespace Orchard.Patrocinadores.Models
         {
             get { return Record.Height; }
             set { Record.Height = value; }
+        }
+
+        public int PatrocinioWidgetTipoRecord_Id
+        {
+            get { return Record.PatrocinioWidgetTipoRecord_Id; }
+            set { Record.PatrocinioWidgetTipoRecord_Id = value; }
+        }
+
+        private List<PatrocinioWidgetTipoRecord> _WidgetTipoRecord = null;
+        public List<PatrocinioWidgetTipoRecord> WidgetTipoRecord
+        {
+            get { return _WidgetTipoRecord; }
+            set { _WidgetTipoRecord = value; }
         }
     }
 }

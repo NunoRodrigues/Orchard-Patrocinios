@@ -101,12 +101,14 @@
     <Compile Include="Handlers\PatrocinioWidgetHandler.cs" />
     <Compile Include="Handlers\PatrocinioConfigurationHandler.cs" />
     <Compile Include="Migrations.cs" />
+    <Compile Include="Models\PatrocinioWidgetTipoRecord.cs" />
     <Compile Include="Models\PatrocinadorPart.cs" />
     <Compile Include="Models\PatrocinadorRecord.cs" />
     <Compile Include="Models\PatrocinioItemRecord.cs" />
-    <Compile Include="Models\PatrociniosPart.cs" />
     <Compile Include="Models\PatrociniosPartRecord.cs" />
     <Compile Include="Models\PatrocinioWidgetRecord.cs" />
+    <Compile Include="PatrocinadorWidgetTipoRecord.cs" />
+    <Compile Include="PatrocinadorWidgetTipoRecord_2.cs" />
     <Compile Include="ResourceManifest.cs" />
     <Compile Include="Services\IPatrocinadoresService.cs" />
     <Compile Include="Services\IPatrocinioService.cs" />

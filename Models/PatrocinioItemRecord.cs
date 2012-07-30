@@ -18,7 +18,7 @@ namespace Orchard.Patrocinadores.Models
         public virtual PatrocinadorRecord PatrocinadorRecord { get; set; }
 
         [Required, Display(Name="Tipo")]
-        public virtual int IdTipo { get; set; }
+        public virtual int PatrocinioWidgetTipoRecord_Id { get; set; }
 
         [Required, Display(Name = "Data Inicio")]
         public virtual DateTime DataInicio { get; set; }
