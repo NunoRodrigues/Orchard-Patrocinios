@@ -8,23 +8,37 @@ using Orchard.ContentManagement.Drivers;
 
 using Orchard.Patrocinadores.Models;
 using Orchard.Patrocinadores.Services;
+using Orchard.Patrocinadores.ViewModels;
 
 namespace Orchard.Patrocinadores.Drivers
 {
     public class PatrociniosDriver : ContentPartDriver<PatrociniosPart>
     {
         private IPatrocinadoresService _patrocinadoresService;
+        private IPatrocinioWidgetTipo _tiposService;
 
-        public PatrociniosDriver(IPatrocinadoresService patrocinadoresService)
+        public PatrociniosDriver(IPatrocinadoresService patrocinadoresService, IPatrocinioWidgetTipo tiposService)
         {
             _patrocinadoresService = patrocinadoresService;
+            _tiposService = tiposService;
         }
 
         protected override DriverResult Display(PatrociniosPart part, string displayType, dynamic shapeHelper)
         {
-            part.Patrocinadores = _patrocinadoresService.ListAll();
+            if (displayType != "Detail")
+            {
+                Dictionary<PatrocinioWidgetTipoRecord, PatrocinioItemRecord> items = new Dictionary<PatrocinioWidgetTipoRecord, PatrocinioItemRecord>();
+                DateTime now = DateTime.Now.Date;
 
-            return ContentShape("Parts_Patrocinios", () => shapeHelper.Parts_Patrocinios(Patrocinios: part.CurrentPatrocinios, Patrocinadores: _patrocinadoresService.ListAll()));
+                foreach (PatrocinioWidgetTipoRecord item in _tiposService.GetAll().Table)
+                {
+                    items.Add(item, part.CurrentPatrocinios.FirstOrDefault(x => x.PatrocinioWidgetTipoRecord_Id == item.Id && x.DataInicio <= now && x.DataFim >= now));
+                }
+
+                return ContentShape("Parts_Patrocinios", () => shapeHelper.Parts_Patrocinios(Items: items));
+            }
+
+            return null;
         }
 
         //GET
@@ -32,9 +46,13 @@ namespace Orchard.Patrocinadores.Drivers
         {
             if (part.Id > 0)
             {
-                part.Patrocinadores = _patrocinadoresService.ListAll();
+                PatrociniosAdminEditViewModel viewModel = new PatrociniosAdminEditViewModel()
+                {
+                    Patrocinadores = _patrocinadoresService.ListAll(),
+                    Part = part
+                };
 
-                return ContentShape("Parts_Patrocinios_Edit", () => shapeHelper.EditorTemplate(TemplateName: "Parts/Patrocinios", Model: part, Prefix: Prefix));
+                return ContentShape("Parts_Patrocinios_Edit", () => shapeHelper.EditorTemplate(TemplateName: "Parts/Patrocinios", Model: viewModel, Prefix: Prefix));
             }
             else
             {

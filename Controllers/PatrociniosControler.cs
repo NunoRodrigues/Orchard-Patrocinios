@@ -36,6 +36,7 @@ namespace Orchard.Patrocinadores.Controllers
 
         public Localizer T { get; set; }
 
+        [HttpPost]
         public JsonResult List(int modelId)
         {
             return Json(_service.List(modelId));
@@ -45,12 +46,17 @@ namespace Orchard.Patrocinadores.Controllers
         public JsonResult Save(PatrocinioItemRecord data, int patrocinadorID)
         {
             // Part - Validação
-            if (!(data.PatrociniosPartRecord_Id > 0))
+            if (data.PatrociniosPartRecord_Id <= 0)
             {
-                _notifier.Error(T("Patrocinios não foram gravados. (Part não pode estar vazio)"));
+                _notifier.Error(T("Patrocinio não foi gravado. (Part não pode estar vazio)"));
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
 
+            if (data.PatrocinioWidgetTipoRecord_Id <= 0)
+            {
+                _notifier.Error(T("Patrocinio não foi gravado. (Posição não pode estar vazia)"));
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
 
             // Patrocinador
             data.PatrocinadorRecord = _srvPatrocinadores.GetById(patrocinadorID);
@@ -58,9 +64,11 @@ namespace Orchard.Patrocinadores.Controllers
             // Patrocinador - Validação
             if (data.PatrocinadorRecord == null)
             {
-                //_notifier.Error(T("Patrocinios não foram gravados. (Patrocinador não pode estar vazio)"));
-                //return Json(false, JsonRequestBehavior.AllowGet);
+                _notifier.Error(T("Patrocinio não foi gravado. (Patrocinador não pode estar vazio)"));
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
+
+            //_notifier.List()
 
 
             // Gravar

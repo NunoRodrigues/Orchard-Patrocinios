@@ -16,6 +16,11 @@ namespace Orchard.Patrocinadores.Services
             _repository = repository;
         }
 
+        public IRepository<PatrocinioItemRecord> GetAll()
+        {
+            return _repository;
+        }
+
         public List<Models.PatrocinioItemRecord> List(int modelId)
         {
             return _repository.Table.Where(x => x.PatrociniosPartRecord_Id == modelId).ToList();

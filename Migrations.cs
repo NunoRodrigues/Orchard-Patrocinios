@@ -67,14 +67,6 @@ namespace Orchard.Patrocinadores
                 .WithPart("CommonPart")
                 .WithSetting("Stereotype", "Widget"));
 
-            // Widget - Foreign Key com WidgetTipo
-            SchemaBuilder.CreateForeignKey("FK_" + typeof(PatrocinioWidgetRecord).Name + "_" + typeof(PatrocinioWidgetTipoRecord).Name
-                , "Patrocinadores"
-                , typeof(PatrocinioWidgetRecord).Name
-                , new[] { typeof(PatrocinioWidgetTipoRecord).Name + "_Id" }
-                , typeof(PatrocinioWidgetTipoRecord).Name
-                , new[] { "Id" });
-
             // Patrocinadores - Tabela
             SchemaBuilder.CreateTable(typeof(PatrocinadorRecord).Name, table => table
                 .Column<int>("Id", col => col.PrimaryKey().Identity())
@@ -101,6 +93,7 @@ namespace Orchard.Patrocinadores
                 .Column<DateTime>("DataInicio")
                 .Column<DateTime>("DataFim")
                 .Column<string>("URLImage")
+                .Column<string>("ExternalLink")
             );
 
             // Patrocinio - Foreign Key com Patrocinadores
@@ -134,9 +127,9 @@ namespace Orchard.Patrocinadores
         public int UpdateFrom1()
         {
 
-           
+
             return 2;
         }
-        */
+         */
     }
 }

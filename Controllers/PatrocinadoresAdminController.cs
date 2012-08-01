@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using System.Collections.Generic;
+
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.DisplayManagement;
@@ -9,40 +11,42 @@ using Orchard.Logging;
 using Orchard.Settings;
 using Orchard.UI.Admin;
 using Orchard.UI.Navigation;
+using Orchard.Data;
+using Orchard.ContentManagement.Records;
+using Orchard.Core.Title.Models;
+
+using Orchard.Patrocinadores.Services;
 using Orchard.Patrocinadores.Models;
 using Orchard.Patrocinadores.ViewModels;
-using Orchard.Data;
 using Orchard.Patrocinadores.Handlers;
-using System.Collections.Generic;
-using Orchard.Patrocinadores.Services;
 
 namespace Orchard.Patrocinadores.Controllers
 {
     [Admin]
     public class PatrocinadoresAdminController : Controller, IUpdateModel
     {
-        private IPatrocinadoresService _dataService;
-        private readonly ISiteService _siteService;
+        private IPatrocinadoresService _patrocinadoresService;
+        private IPatrocinioService _patrocinioService;
         private dynamic Shape { get; set; }
-        //private readonly IContentManager _contentManager;
-        //private readonly ITransactionManager _transactionManager;
-
-        //public IOrchardServices Services { get; set; }
-        //public ILogger Logger { get; set; }
-        //public Localizer T { get; set; }
+        private IContentManager _manager;
+        private IRepository<TitlePartRecord> _titlesList;
 
         public PatrocinadoresAdminController(   IPatrocinadoresService patrocinadoresService
-                                                , ISiteService siteService
-                                                , IShapeFactory shapeFactory)
+                                                , IPatrocinioService patrocinioService
+                                                , IShapeFactory shapeFactory
+                                                , IContentManager manager
+                                                , IRepository<TitlePartRecord> titlesList)
         {
-            this._dataService = patrocinadoresService;
-            this._siteService = siteService;
+            this._patrocinadoresService = patrocinadoresService;
+            this._patrocinioService = patrocinioService;
             this.Shape = shapeFactory;
+            this._manager = manager;
+            this._titlesList = titlesList;
         }
         
         public ActionResult List(PagerParameters pagerParameters, PatrocinadoresListOptions options)
         {
-            List<PatrocinadorRecord> records = _dataService.List(pagerParameters, null, options.TextSearch);
+            List<PatrocinadorRecord> records = _patrocinadoresService.List(pagerParameters, null, options.TextSearch);
 
             var model = new PatrocinadoresListViewModel()
             {
@@ -55,7 +59,7 @@ namespace Orchard.Patrocinadores.Controllers
 
         public ActionResult Edit(int id)
         {
-            PatrocinadorRecord val = _dataService.GetById(id);
+            PatrocinadorRecord val = _patrocinadoresService.GetById(id);
 
             var model = new PatrocinadoresEditViewModel()
             {
@@ -71,7 +75,7 @@ namespace Orchard.Patrocinadores.Controllers
             var viewModel = new PatrocinadoresEditViewModel();
             UpdateModel(viewModel);
 
-            _dataService.Update(viewModel.Record);
+            _patrocinadoresService.Update(viewModel.Record);
 
             return RedirectToAction("List");
         }

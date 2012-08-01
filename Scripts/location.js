@@ -96,7 +96,7 @@
         }
 
         // Combo - Items
-        $.each(this.regions, function (index, value) {
+        $.each(LocationWidget.regions, function (index, value) {
             combo.append('<option value="' + value.id + '">' + value.title + '</option>');
         });
 
@@ -122,7 +122,7 @@
         var result = null;
         idTipo = parseInt(idTipo, 10);
 
-        $.each(this.regions, function (index, value) {
+        $.each(LocationWidget.regions, function (index, value) {
             if(value.id == idTipo) {
                 result = value;
                 return false; //neste caso, equivalente a um "break"

@@ -28,5 +28,8 @@ namespace Orchard.Patrocinadores.Models
 
         [Required, Display(Name = "URL Imagem")]
         public virtual string URLImage { get; set; }
+
+        [Required, Display(Name = "Ligação Externa")]
+        public virtual string ExternalLink { get; set; }
     }
 }

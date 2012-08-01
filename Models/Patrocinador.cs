@@ -7,6 +7,16 @@ using Orchard.ContentManagement;
 
 namespace Orchard.Patrocinadores.Models
 {
+    public class PatrocinadorRecord
+    {
+        public virtual int Id { get; set; }
+        public virtual string Nome { get; set; }
+        public virtual string ContactoNome { get; set; }
+        public virtual string ContactoTelefone { get; set; }
+        public virtual string ContactoEmail { get; set; }
+        public virtual string Observacoes { get; set; }
+    }
+
     public class PatrocinadorPart : ContentPart<PatrocinadorRecord>
     {
         [Required]

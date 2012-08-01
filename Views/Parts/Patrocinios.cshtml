@@ -1,1 +1,9 @@
-﻿<h2>Patrocinio CONFIG!!!</h2>
+﻿@using Orchard.Patrocinadores.Models;
+@using Orchard.Patrocinadores;
+<span>
+    @T("Patrocínios") 
+    @foreach (KeyValuePair<PatrocinioWidgetTipoRecord, PatrocinioItemRecord> item in Model.Items)
+    {
+        <span style="display:inline-block; width:60px; text-align:center; margin:0px; padding:0px; font-size:smaller; color:white; background:@item.Key.Color; @if(item.Value == null) { <text>opacity: 0.3</text> }">@item.Key.Tipo</span>
+    }    
+</span>

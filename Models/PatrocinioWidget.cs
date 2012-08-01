@@ -31,6 +31,7 @@ namespace Orchard.Patrocinadores.Models
             set { Record.Height = value; }
         }
 
+        [Required]
         public int PatrocinioWidgetTipoRecord_Id
         {
             get { return Record.PatrocinioWidgetTipoRecord_Id; }

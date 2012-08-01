@@ -70,6 +70,7 @@
     <Content Include="Styles\fullcalendar.print.css" />
     <Content Include="Styles\images\Fundo.gif" />
     <Content Include="Styles\images\menu.patrocinadores.png" />
+    <Content Include="Styles\images\zoom.png" />
     <Content Include="Styles\location.css" />
     <Content Include="Styles\menu.patrocinadores-admin.css" />
     <Content Include="Web.config" />
@@ -96,27 +97,31 @@
     <Compile Include="AdminMenu.cs" />
     <Compile Include="Controllers\PatrocinadoresAdminController.cs" />
     <Compile Include="Controllers\PatrociniosControler.cs" />
+    <Compile Include="Controllers\SumarioController.cs" />
     <Compile Include="Drivers\PatrocinioWidgetDriver.cs" />
     <Compile Include="Drivers\PatrociniosDriver.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Handlers\PatrocinioWidgetHandler.cs" />
     <Compile Include="Handlers\PatrocinioConfigurationHandler.cs" />
     <Compile Include="Migrations.cs" />
-    <Compile Include="Models\PatrocinioWidgetTipoRecord.cs" />
-    <Compile Include="Models\PatrocinadorPart.cs" />
-    <Compile Include="Models\PatrocinadorRecord.cs" />
+    <Compile Include="Models\PartWatcher.cs" />
+    <Compile Include="Models\PatrocinioWidgetTipo.cs" />
+    <Compile Include="Models\Patrocinador.cs" />
     <Compile Include="Models\PatrocinioItemRecord.cs" />
     <Compile Include="Models\PatrociniosPartRecord.cs" />
-    <Compile Include="Models\PatrocinioWidgetRecord.cs" />
-    <Compile Include="PatrocinadorWidgetTipoRecord.cs" />
-    <Compile Include="PatrocinadorWidgetTipoRecord_2.cs" />
+    <Compile Include="Models\PatrocinioWidget.cs" />
     <Compile Include="ResourceManifest.cs" />
     <Compile Include="Services\IPatrocinadoresService.cs" />
     <Compile Include="Services\IPatrocinioService.cs" />
+    <Compile Include="Services\IPatrocinioWidgetTipo.cs" />
     <Compile Include="Services\PatrocinadoresService.cs" />
     <Compile Include="Services\PatrocinioService.cs" />
+    <Compile Include="Services\PatrocinioWidgetTipoService.cs" />
     <Compile Include="ViewModels\PatrocinadoresEditViewModel.cs" />
     <Compile Include="ViewModels\PatrocinadoresListaOptions.cs" />
     <Compile Include="ViewModels\PatrocinadoresListaViewModel.cs" />
+    <Compile Include="ViewModels\PatrociniosAdminEditViewModel.cs" />
+    <Compile Include="ViewModels\SumarioViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\EditorTemplates\Parts\PatrocinioWidget.cshtml" />
@@ -135,6 +140,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\PatrocinadoresAdmin\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Sumario\Sumario.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

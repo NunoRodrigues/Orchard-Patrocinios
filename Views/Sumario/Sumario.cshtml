@@ -1,0 +1,206 @@
+﻿@model Orchard.Patrocinadores.ViewModels.SumarioViewModel
+@using Orchard.Patrocinadores.ViewModels;
+@using Orchard.Patrocinadores;
+@{
+    Layout.Title = T("Sumário").ToString();
+}
+@helper getLabel(FracaoTemporal status) {    
+    switch (status)
+    {
+        case FracaoTemporal.SemanaActual:
+            <text>@T("Esta Semana")</text>
+            break;
+        case FracaoTemporal.ProximaSemana:
+            <text>@T("Proxima Semana")</text>
+            break;
+        case FracaoTemporal.Semanas2:
+            <text>@T("a 2 Semanas")</text>
+            break;
+        case FracaoTemporal.Semanas4:
+            <text>@T("a 4 Semanas")</text>
+            break;
+    }
+}
+@helper DrawItems(List<SumarioViewModelItem> items)
+{
+    foreach (var p in items)
+    {
+        <tr>
+            <td style="padding:0px; background:@p.Tipo.Color ;"><div class="TipoIcon">&nbsp;</div></td>
+            <td class="PageLabel @if(p.Urgent) { <text>Urgent</text> }">
+                <div>@p.Title.Title</div>
+                <div style="font-size:smaller;">@p.Patrocinador.Nome</div>
+                <div class='tooltip'>
+                    <div class="main" style="border:solid 5px @p.Tipo.Color; border-bottom:solid 5px @p.Tipo.Color; border-right:solid 5px @p.Tipo.Color;">
+                        <table>
+                            <tr><td class="label">@T("Página")</td><td class="value">@Html.ActionLink(p.Title.Title, "Edit", new {area = "Contents", controller = "Admin", action = "Edit",  id = p.Title.Id })</td></tr>
+                            <tr><td class="label">@T("Patrocinador")</td><td class="value">@Html.ActionLink(p.Patrocinador.Nome, "Edit", new { area = "Patrocinadores", controller = "PatrocinadoresAdmin", action = "Edit",  id = p.Patrocinador.Id })</td></tr>
+                            <tr><td class="label">@T("Início")</td><td class="value">@p.Patrocinio.DataInicio.ToStringFormated()</td></tr>
+                            <tr><td class="label">@T("Fim")</td><td class="value">@p.Patrocinio.DataFim.ToStringFormated()</td></tr>
+                            <tr><td class="label">@T("Posição")</td><td class="value">@p.Tipo.Tipo</td></tr>
+                            <tr><td class="label">@T("Imagem")</td><td class="value"><a href="@p.Patrocinio.URLImage" target="_new">@p.Patrocinio.URLImage</a></td></tr>
+                            <tr><td class="label">@T("Ligação Ext.")</td><td class="value"><a href="@p.Patrocinio.ExternalLink" target="_new">@p.Patrocinio.ExternalLink</a></td></tr>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    }
+}
+@using(Script.Foot()) {
+    <style type="text/css">
+        .TipoIcon {
+            width:5px;
+        }
+
+        .PageLabel {
+            width:100%;
+            cursor:pointer;
+            border:solid 1px #eeeeee !important;
+        }
+        
+        .PageLabelHover {
+            border:solid 1px #666666 !important;
+        }
+        
+        .Urgent {
+            background:#FFCFCF;
+        }
+        
+        .tooltip{
+            text-align: left;
+            color: #eeeeee;
+            display: none;
+            position: absolute;
+            border:solid 10px white;
+            margin: 0px 0px 0px 0px;
+            cursor:default;
+        }
+        
+        .tooltip .main{
+            background-color: #ffffff;
+            color:black;
+            padding:5px;
+        }
+
+        .tooltip .label {
+            font-size:smaller;
+            color: #666666;
+        }
+        
+        .tooltip .value
+        {
+            max-width:150px;
+            width:150px;
+            white-space: nowrap;                     
+            overflow: hidden;
+            text-overflow:    ellipsis; 
+        }
+    </style>
+    
+    <script type ="text/javascript">
+    
+        // Document - Init
+        $(document).ready(function () {
+            $('td.PageLabel').parent().click(function () {
+                var tooltip = $(this).find('.tooltip');
+                
+                if (parseInt(tooltip.css("margin-top"),10) == 0) {
+                    tooltip.css("margin-top", -(tooltip.outerHeight(false) - $(this).outerHeight(false)) / 2);
+                    tooltip.css("margin-left", -(tooltip.outerWidth(false) - $(this).outerWidth(false)) / 2);
+                }
+
+                tooltip.show();
+            });
+
+            $('td.PageLabel').parent().hover(function () {
+                $(this).find('.PageLabel').addClass('PageLabelHover');
+            });
+
+            $('td.PageLabel').parent().mouseleave(function () {
+                $(this).find('.PageLabel').removeClass('PageLabelHover');
+                $('.tooltip').hide();
+            });
+        });
+    </script>
+}
+<div>
+    <h2>A Sair</h2>
+    <table class="items" summary="@T("Sumario")">
+        <colgroup>
+            <col id="Col1" />
+            <col id="Col2" />
+            <col id="Col3" />
+            <col id="Col4" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th scope="col">@getLabel(FracaoTemporal.SemanaActual)</th>
+                <th scope="col">@getLabel(FracaoTemporal.ProximaSemana)</th>
+                <th scope="col">@getLabel(FracaoTemporal.Semanas2)</th>
+                <th scope="col">@getLabel(FracaoTemporal.Semanas4)</th>
+            </tr>
+        </thead>
+        <tr itemscope="itemscope">
+            <td width="25%">
+                <table>
+                    @DrawItems(Model.Sair[FracaoTemporal.SemanaActual])
+                </table>
+            </td>
+            <td width="25%">
+                <table>
+                    @DrawItems(Model.Sair[FracaoTemporal.ProximaSemana])
+                </table>
+            </td>
+            <td width="25%">
+                <table>
+                    @DrawItems(Model.Sair[FracaoTemporal.Semanas2])
+                </table>
+            </td>
+            <td width="25%">
+                <table>
+                    @DrawItems(Model.Sair[FracaoTemporal.Semanas4])
+                </table>
+            </td>
+        </tr>
+    </table>
+    <h2>A Entrar</h2>
+    <table class="items" summary="@T("Sumario")">
+        <colgroup>
+            <col id="Col1" />
+            <col id="Col2" />
+            <col id="Col3" />
+            <col id="Col4" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th scope="col">@getLabel(FracaoTemporal.SemanaActual)</th>
+                <th scope="col">@getLabel(FracaoTemporal.ProximaSemana)</th>
+                <th scope="col">@getLabel(FracaoTemporal.Semanas2)</th>
+                <th scope="col">@getLabel(FracaoTemporal.Semanas4)</th>
+            </tr>
+        </thead>
+        <tr itemscope="itemscope">
+            <td width="25%">
+                <table>
+                    @DrawItems(Model.Entrar[FracaoTemporal.SemanaActual])
+                </table>
+            </td>
+            <td width="25%">
+                <table>
+                    @DrawItems(Model.Entrar[FracaoTemporal.ProximaSemana])
+                </table>
+            </td>
+            <td width="25%">
+                <table>
+                    @DrawItems(Model.Entrar[FracaoTemporal.Semanas2])
+                </table>
+            </td>
+            <td width="25%">
+                <table>
+                    @DrawItems(Model.Entrar[FracaoTemporal.Semanas4])
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>

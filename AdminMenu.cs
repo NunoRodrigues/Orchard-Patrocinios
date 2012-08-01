@@ -32,7 +32,7 @@ namespace Orchard.Patrocinadores
                     .Add(subItem => subItem
                         .Caption(T("Sumário"))
                         .Position("1.1")
-                        .Action("Sumario", "PatrocinadoresAdmin", new { area = "Patrocinadores" })
+                        .Action("Sumario", "Sumario", new { area = "Patrocinadores" })
                     )
 
                     // "Orders"
