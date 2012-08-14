@@ -8,7 +8,7 @@ namespace Orchard.Patrocinadores.ViewModels
 {
     public class PatrociniosAdminEditViewModel
     {
-        public List<PatrocinioWidgetTipoRecord> Regions { get; set; }
+        public List<PatrocinioWidgetTipoRecord> Tipos { get; set; }
         public List<PatrocinadorRecord> Patrocinadores { get; set; }
         public PatrociniosPart Part { get; set; }
     }

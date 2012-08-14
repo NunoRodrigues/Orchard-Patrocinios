@@ -44,10 +44,10 @@ namespace Orchard.Patrocinadores
             );
 
             // WidgetTipo - Dados
-            _widgetTipoRecord.Update(new PatrocinioWidgetTipoRecord() { Id = 1, Tipo = "Left", Width = 9, Height = 22, PosTop = 12, PosLeft = 0, Color = "#F7C43C !important" });
-            _widgetTipoRecord.Update(new PatrocinioWidgetTipoRecord() { Id = 2, Tipo = "Right", Width = 9, Height = 22, PosTop = 12, PosLeft = 37, Color = "#A346EE !important" });
-            _widgetTipoRecord.Update(new PatrocinioWidgetTipoRecord() { Id = 3, Tipo = "Top", Width = 46, Height = 9, PosTop = 0, PosLeft = 0, Color = "#349ED7 !important" });
-            _widgetTipoRecord.Update(new PatrocinioWidgetTipoRecord() { Id = 4, Tipo = "Bottom", Width = 46, Height = 9, PosTop = 37, PosLeft = 0, Color = "#51DB5E !important" });
+            _widgetTipoRecord.Update(new PatrocinioWidgetTipoRecord() { Id = 1, Tipo = "Left", Width = 12, Height = 22, PosTop = 15, PosLeft = 0, Color = "#F7C43C !important" });
+            _widgetTipoRecord.Update(new PatrocinioWidgetTipoRecord() { Id = 2, Tipo = "Right", Width = 12, Height = 22, PosTop = 15, PosLeft = 40, Color = "#A346EE !important" });
+            _widgetTipoRecord.Update(new PatrocinioWidgetTipoRecord() { Id = 3, Tipo = "Top", Width = 52, Height = 12, PosTop = 0, PosLeft = 0, Color = "#349ED7 !important" });
+            _widgetTipoRecord.Update(new PatrocinioWidgetTipoRecord() { Id = 4, Tipo = "Bottom", Width = 52, Height = 12, PosTop = 40, PosLeft = 0, Color = "#51DB5E !important" });
 
             // Widget - Tabela
             SchemaBuilder.CreateTable(typeof(PatrocinioWidgetRecord).Name, table => table

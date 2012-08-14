@@ -1,50 +1,12 @@
 ﻿var LocationWidget = {
-    regions : [
-            {
-                id: 1,
-                width: 9,
-                height: 22,
-                top: 12,
-                left: 0,
-                color: '#F7C43C !important',
-                title: 'Left'
-            },
-            {
-                id: 2,
-                width: 9,
-                height: 22,
-                top: 12,
-                left: 37,
-                color: '#A346EE !important',
-                title: 'Right'
-            },
-            {
-                id: 3,
-                width: 46,
-                height: 9,
-                top: 0,
-                left: 0,
-                color: '#349ED7 !important',
-                title: 'Top'
-            },
-            {
-                id: 4,
-                width: 46,
-                height: 9,
-                top: 37,
-                left: 0,
-                color: '#51DB5E !important',
-                title: 'Bottom'
-            }
-            // Other Colors #F73BCC, #EE4F45
-    ],
+    regions: [],
     getNew: function (placeHolder, multipleSelection, selectionChangedFunction) {
         // Grafico
         var itemContainer = $('<div class="LocationWidget"></div>');
 
         // Grafico - Items
-        $.each(this.regions, function (index, value) {
-            var item = $('<div class="LocationWidgetItem" location-id="' + value.id + '" title="' + value.title + '" style="width:' + value.width + 'px; height:' + value.height + 'px; top: ' + value.top + 'px; left: ' + value.left + 'px; background:' + value.color + ';"><div>');
+        $.each(LocationWidget.regions, function (index, value) {
+            var item = $('<div class="LocationWidgetItem" location-id="' + value.Id + '" title="' + value.Tipo + '" style="width:' + value.Width + 'px; height:' + value.Height + 'px; top: ' + value.PosTop + 'px; left: ' + value.PosLeft + 'px; background:' + value.Color + ';"><div>');
 
             if (multipleSelection) {
                 item.click(value, function (args) {
@@ -52,7 +14,7 @@
 
                     var select = placeHolder.find('select');
 
-                    var item = select.find('option[value="' + data.id + '"]');
+                    var item = select.find('option[value="' + data.Id + '"]');
 
                     if (item.attr('selected') == 'selected') {
                         // Tem de ser os dois... e nesta ordem!
@@ -73,7 +35,7 @@
                     var data = args.data;
                     var select = placeHolder.find('select');
 
-                    select.val(data.id);
+                    select.val(data.Id);
 
                     // Select - Refresh
                     select.show();
@@ -85,7 +47,6 @@
 
             itemContainer.append(item);
         });
-        placeHolder.append(itemContainer);
 
         // Combo
         var combo = combo = $('<select class="LocationWidgetSelect"></select>');
@@ -97,7 +58,7 @@
 
         // Combo - Items
         $.each(LocationWidget.regions, function (index, value) {
-            combo.append('<option value="' + value.id + '">' + value.title + '</option>');
+            combo.append('<option value="' + value.Id + '">' + value.Tipo + '</option>');
         });
 
         // Combo - Events
@@ -115,7 +76,12 @@
         });
 
         // Combo
-        placeHolder.append(combo);
+        var container2 = $('<div></div>');
+        container2.append(combo);
+        placeHolder.append(container2);
+
+        // Graphic
+        placeHolder.append(itemContainer);
         combo.change();
     },
     getRegion: function (idTipo) {
@@ -123,7 +89,7 @@
         idTipo = parseInt(idTipo, 10);
 
         $.each(LocationWidget.regions, function (index, value) {
-            if(value.id == idTipo) {
+            if(value.Id == idTipo) {
                 result = value;
                 return false; //neste caso, equivalente a um "break"
             }

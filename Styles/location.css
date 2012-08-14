@@ -1,10 +1,14 @@
-﻿.LocationWidget {
-    display:inline-block;
+﻿.LocationEditWidget {
+    
+}
+
+.LocationWidget {
     position:relative;
-    width:48px;
-    height:48px;
-    background-image:url('/OrchardLocal/Modules/Patrocinadores/Styles/Images/Fundo.gif');
-    margin:0px 0px 0px 0px;
+    display:inline-block;
+    width:54px;
+    height:54px;
+    background: url('/OrchardLocal/Modules/Patrocinadores/Styles/Images/Fundo.gif') 15px 15px no-repeat;
+    margin:0px 10px 0px 0px;
 }
 .LocationWidgetItem {
     position:absolute; 
@@ -16,3 +20,4 @@
 .LocationWidgetSelect {
     margin:0px 0px 0px 0px;
 }
+

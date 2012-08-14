@@ -27,6 +27,7 @@ namespace Orchard.Patrocinadores.Drivers
         {
             if (displayType != "Detail")
             {
+                
                 Dictionary<PatrocinioWidgetTipoRecord, PatrocinioItemRecord> items = new Dictionary<PatrocinioWidgetTipoRecord, PatrocinioItemRecord>();
                 DateTime now = DateTime.Now.Date;
 
@@ -48,7 +49,8 @@ namespace Orchard.Patrocinadores.Drivers
             {
                 PatrociniosAdminEditViewModel viewModel = new PatrociniosAdminEditViewModel()
                 {
-                    Patrocinadores = _patrocinadoresService.ListAll(),
+                    Tipos = _tiposService.GetAll().Table.ToList(),
+                    Patrocinadores = _patrocinadoresService.GetAll().Table.ToList(),
                     Part = part
                 };
 

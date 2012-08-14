@@ -23,7 +23,14 @@
 
         var ModelId = '@Model.Part.Id';
 
-        var myregions = @Html.Raw(Json.Encode(Model.Regions));
+        var tipos = @Html.Raw(Json.Encode(Model.Tipos));
+        /*
+        tipos = [
+            {"Id":1,"Tipo":"Esquerda","Width":12,"Height":22,"PosTop":15,"PosLeft":0,"Color":"#F7C43C !important"},
+            {"Id":2,"Tipo":"Direita","Width":12,"Height":22,"PosTop":15,"PosLeft":40,"Color":"#A346EE !important"},
+            {"Id":3,"Tipo":"Topo","Width":52,"Height":12,"PosTop":0,"PosLeft":0,"Color":"#349ED7 !important"},
+            {"Id":4,"Tipo":"Fundo","Width":52,"Height":12,"PosTop":40,"PosLeft":0,"Color":"#51DB5E !important"}];
+*/
 
         // Data - Raw - Patrocinadores
         var patrocinadores = @Html.Raw(Json.Encode(Model.Patrocinadores));
@@ -47,7 +54,7 @@
                                 title: value.PatrocinadorRecord.Nome,
                                 start: parseDateFromMVC(value.DataInicio),
                                 end: parseDateFromMVC(value.DataFim),
-                                backgroundColor: LocationWidget.getRegion(value.PatrocinioWidgetTipoRecord_Id).color, 
+                                backgroundColor: LocationWidget.getRegion(value.PatrocinioWidgetTipoRecord_Id).Color, 
                                 textColor: '#FFFFFF !important',
 
                                 Id: value.Id,
@@ -238,6 +245,8 @@
             // Calendar - Init
             Calendar.Refresh();
 
+            LocationWidget.regions = tipos;
+
             // Calendar - Filter
             LocationWidget.getNew($('#LocationFilter'), true, function(sender, multipleSelection) {
                 var values = $(sender).val();
@@ -265,7 +274,7 @@
 <h2>Patrocinadores</h2>
 <fieldset>
     <div>
-        <span id="LocationFilter"></span>
+        <div id="LocationFilter"></div>
     </div>
     <div id='calendar'></div>
 </fieldset>

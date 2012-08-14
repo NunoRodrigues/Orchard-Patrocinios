@@ -25,9 +25,14 @@ namespace Orchard.Patrocinadores.Services
             _shapeFactory = shapeFactory;
         }
 
-        public List<PatrocinadorRecord> ListAll()
+        public IRepository<PatrocinadorRecord> GetAll()
         {
-            return _repository.Table.ToList();
+            return _repository;
+        }
+
+        public PatrocinadorRecord GetById(int id)
+        {
+            return _repository.Table.FirstOrDefault(i => i.Id == id);
         }
 
         public List<PatrocinadorRecord> List(PagerParameters pagerParameters, bool? status, string pesquisaLivre)
@@ -51,10 +56,6 @@ namespace Orchard.Patrocinadores.Services
             return records.ToList();
         }
 
-        public PatrocinadorRecord GetById(int id)
-        {
-            return _repository.Table.FirstOrDefault(i => i.Id == id);
-        }
 
         public void Update(PatrocinadorRecord record)
         {
